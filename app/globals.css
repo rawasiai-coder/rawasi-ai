@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* ---------- ثمانية ---------- */
+@font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Light.woff2") format("woff2");   font-weight:300; font-display:swap; }
+@font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+@font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Medium.woff2") format("woff2");  font-weight:500; font-display:swap; }
+@font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Bold.woff2") format("woff2");    font-weight:700; font-display:swap; }
+@font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Black.woff2") format("woff2");   font-weight:800; font-display:swap; }
+
+@theme{
+  --color-ink:#08090B;
+  --color-panel:#0F1114;
+  --color-blue:#00A3E0;
+  --color-sky:#BBE0FF;
+  --color-teal:#3A9DBB;
+  --color-amber:#DF9626;
+  --color-orange:#E8851B;
+  --font-sans:"Thmanyah","Segoe UI",Tahoma,Arial,sans-serif;
+}
+
+:root{
+  --line:rgba(255,255,255,.12);
+  --dim:rgba(255,255,255,.58);
+  --ease-out:cubic-bezier(.23,1,.32,1);
+}
+
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--color-ink); color:#fff;
+  font-family:var(--font-sans); line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.en{ direction:ltr; unicode-bidi:isolate; }
+
+/* ---------- موجة التدرّج ----------
+   ثلاث طبقات تتحرك بسرعات مختلفة فتتداخل كموجة.
+   CSS خالص: تعمل خارج الخيط الرئيسي ولا تُسقط إطارات عند انشغال المتصفح. */
+.wave{ position:absolute; inset:-30%; will-change:transform; }
+
+.wave-a{
+  background:
+    radial-gradient(46% 54% at 84% 12%, var(--color-blue) 0%, transparent 64%),
+    radial-gradient(42% 48% at 50% 4%,  var(--color-sky) 0%, transparent 60%);
+  filter:blur(48px) saturate(150%);
+  animation:waveA 19s ease-in-out infinite;
+}
+.wave-b{
+  background:
+    radial-gradient(52% 56% at 14% 36%, var(--color-teal) 0%, transparent 66%),
+    radial-gradient(58% 60% at 64% 74%, var(--color-amber) 0%, transparent 70%);
+  filter:blur(56px) saturate(148%);
+  animation:waveB 25s ease-in-out infinite;
+}
+.wave-c{
+  background:radial-gradient(56% 58% at 26% 92%, var(--color-orange) 0%, transparent 68%);
+  filter:blur(60px) saturate(145%);
+  animation:waveC 31s ease-in-out infinite;
+}
+
+@keyframes waveA{
+  0%,100%{ transform:translate3d(0,0,0)      scale(1);    }
+  33%    { transform:translate3d(-4%,3%,0)   scale(1.10); }
+  66%    { transform:translate3d(3%,-2%,0)   scale(1.04); }
+}
+@keyframes waveB{
+  0%,100%{ transform:translate3d(0,0,0)      scale(1.04); }
+  40%    { transform:translate3d(5%,-4%,0)   scale(1.13); }
+  75%    { transform:translate3d(-3%,2%,0)   scale(1.02); }
+}
+@keyframes waveC{
+  0%,100%{ transform:translate3d(0,0,0)      scale(1.06); }
+  50%    { transform:translate3d(-5%,-3%,0)  scale(1.16); }
+}
+
+/* الأزرار */
+.btn{
+  font-weight:700; font-size:15px; padding:13px 26px; border-radius:11px;
+  border:1px solid transparent; display:inline-block; cursor:pointer;
+  transition:transform 160ms var(--ease-out), background 200ms ease, border-color 200ms ease;
+}
+.btn:active{ transform:scale(.97); }
+.btn-primary{ background:#fff; color:var(--color-ink); }
+.btn-outline{
+  background:rgba(255,255,255,.08); color:#fff;
+  border:1.5px solid rgba(255,255,255,.72); backdrop-filter:blur(6px);
+}
+.btn-outline:hover{ background:rgba(255,255,255,.18); border-color:#fff; }
+
+/* كشف عند الظهور */
+.rv{ opacity:0; transform:translateY(14px); transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
+.rv.in{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce){
+  .wave{ animation:none !important; }
+  .rv{ transition:opacity 200ms ease; transform:none; }
+  html{ scroll-behavior:auto; }
+}
