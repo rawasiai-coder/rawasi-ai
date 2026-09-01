@@ -86,9 +86,12 @@ body{
 }
 .btn-outline:hover{ background:rgba(255,255,255,.18); border-color:#fff; }
 
-/* كشف عند الظهور */
-.rv{ opacity:0; transform:translateY(14px); transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
-.rv.in{ opacity:1; transform:none; }
+/* كشف عند الظهور.
+   ponytail: الإخفاء يُفعّله JS عبر .js-rv على <html> — بلا JS يبقى كل شيء ظاهراً
+   بدل صفحة سوداء فارغة. */
+.js-rv .rv{ opacity:0; transform:translateY(14px); }
+.rv{ transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
+.js-rv .rv.in{ opacity:1; transform:none; }
 
 @media (prefers-reduced-motion: reduce){
   .wave{ animation:none !important; }

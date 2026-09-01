@@ -10,6 +10,12 @@ export default function Nav() {
         <a href="#how" className="text-sm text-[var(--dim)] transition-colors hover:text-white">
           كيف نعمل
         </a>
+        <a href="#work" className="text-sm text-[var(--dim)] transition-colors hover:text-white">
+          أعمالنا
+        </a>
+        <a href="#faq" className="text-sm text-[var(--dim)] transition-colors hover:text-white">
+          الأسئلة
+        </a>
         <a href="#booking" className="text-sm text-[var(--dim)] transition-colors hover:text-white">
           احجز
         </a>
