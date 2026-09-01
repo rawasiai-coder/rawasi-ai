@@ -59,17 +59,17 @@ export default function Work() {
 
   return (
     <section id="work" className="rv mx-auto max-w-[1120px] px-6 py-24">
-      <div className="mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]">
+      <div className="mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]">
         ما نقدّمه
       </div>
-      <h2 className="text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
+      <h2 className="text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
         وكلاء وأتمتة تعمل نيابةً عنكم
       </h2>
-      <p className="mt-2.5 max-w-[54ch] text-[var(--dim)]">
+      <p className="mx-auto mt-2.5 max-w-[54ch] text-center text-[var(--dim)]">
         كل خدمة تبدأ من عملية يدوية متكرّرة وتنتهي بنظام يعمل وحده.
       </p>
 
-      <div className="mt-7 flex flex-wrap gap-2.5">
+      <div className="mt-7 flex flex-wrap justify-center gap-2.5">
         {FILTERS.map((f) => (
           <button
             key={f}
@@ -86,11 +86,11 @@ export default function Work() {
         ))}
       </div>
 
-      <div className="mt-7 grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-7 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((w) => (
           <article
             key={w.t}
-            className="lift group rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] p-6 shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform] duration-200 hover:border-black/15"
+            className="lift group flex h-full flex-col rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] p-6 shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform] duration-200 hover:border-black/15"
           >
             <div className="mb-5 flex items-center justify-between">
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-[rgba(0,163,224,.10)] text-[var(--color-blue)] transition-colors duration-200 group-hover:bg-[rgba(0,163,224,.18)]">

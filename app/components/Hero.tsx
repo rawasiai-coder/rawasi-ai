@@ -1,12 +1,24 @@
 // مرجع التخطيط: Front على Mobbin — عنوان مركزي على تدرّج ناعم، بلا صورة
 export default function Hero() {
   return (
-    <header className="relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
-      {/* تدرّج شبكي — أزرق يسار، أصفر يمين، ونقطة بيضاء في الوسط للنص */}
+    <header className="relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] bg-[url(/poster.jpg)] bg-cover bg-center text-[var(--color-ink)]">
+      {/* فيديو خلفية — أزرق يسار، ذهبي يمين. 240KB WebM بعد ضغط ffmpeg.
+          poster يظهر فوراً فلا تبدو الصفحة فارغة قبل تحميل الفيديو. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <div className="mesh mesh-warm" />
-        <div className="mesh mesh-cool" />
-        <div className="absolute inset-0 bg-[radial-gradient(52%_48%_at_50%_46%,rgba(255,255,255,.80)_0%,rgba(255,255,255,.42)_48%,transparent_76%)]" />
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/poster.jpg"
+        >
+          <source src="/hero.webm" type="video/webm" />
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+        {/* حجاب أبيض ليبقى النص الداكن مقروءاً فوق الفيديو */}
+        <div className="absolute inset-0 bg-[radial-gradient(56%_52%_at_50%_46%,rgba(255,255,255,.90)_0%,rgba(255,255,255,.62)_46%,rgba(255,255,255,.30)_74%,rgba(255,255,255,.16)_100%)]" />
       </div>
 
       <div className="hero-in relative z-10 mx-auto w-full max-w-[900px] px-6 pb-16 pt-28 text-center">

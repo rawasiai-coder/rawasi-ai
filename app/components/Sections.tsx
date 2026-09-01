@@ -40,8 +40,8 @@ const STEPS = [
   },
 ];
 
-const label = "mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]";
-const h2 = "text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight";
+const label = "mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]";
+const h2 = "text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight";
 
 export function Problem() {
   return (
@@ -61,11 +61,11 @@ export function Services() {
     <section id="services" className="rv mx-auto max-w-[1120px] px-6 py-24">
       <div className={label}>الخدمات</div>
       <h2 className={h2}>ثلاثة أشياء نُتقنها</h2>
-      <div className="mt-9 grid gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-9 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => (
           <div
             key={s.k}
-            className="rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] p-6 shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform,box-shadow] duration-200 lift hover:border-black/15"
+            className="lift flex h-full flex-col rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] p-6 shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform,box-shadow] duration-200 hover:border-black/15"
           >
             {/* مرجع: GitBook / Aboard على Mobbin — أيقونة خطّية في مربّع ملوّن خفيف */}
             <div className="mb-5 grid h-11 w-11 place-items-center rounded-xl bg-[rgba(0,163,224,.10)] text-[var(--color-blue)]">
@@ -97,7 +97,7 @@ export function How() {
     <section id="how" className="rv mx-auto max-w-[1120px] px-6 py-24">
       <div className={label}>كيف نعمل</div>
       <h2 className={h2}>من التشخيص إلى التشغيل</h2>
-      <p className="mt-2.5 max-w-[52ch] text-[var(--dim)]">
+      <p className="mx-auto mt-2.5 max-w-[52ch] text-center text-[var(--dim)]">
         أربع خطوات واضحة. لا مفاجآت ولا مراحل مخفيّة.
       </p>
       {/* مرجع التخطيط: Samara على Mobbin — عمود متعرّج بعمود فقري.

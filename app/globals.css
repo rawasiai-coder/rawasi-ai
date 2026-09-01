@@ -209,6 +209,8 @@ body{
   .hero-in > *, .portrait-in{ animation:none !important; opacity:1 !important; transform:none !important; }
   .btn-primary, .live-dot{ animation:none !important; }
   .btn-primary::after{ display:none; }
+  /* الفيديو يُخفى ويبقى poster كخلفية ثابتة */
+  header video{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){
