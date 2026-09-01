@@ -1,64 +1,72 @@
-import Image from "next/image";
-
+// مرجع التخطيط: Front على Mobbin — عنوان مركزي على تدرّج ناعم، بلا صورة
 export default function Hero() {
   return (
     <header className="relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
-      {/* تدرّج شبكي ناعم — مرجع: Hims على Mobbin. أصفر يمين، أزرق يسار. */}
+      {/* تدرّج شبكي — أزرق يسار، أصفر يمين، ونقطة بيضاء في الوسط للنص */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div className="mesh mesh-warm" />
         <div className="mesh mesh-cool" />
-        {/* حجاب فاتح خلف النص فقط ليبقى مقروءاً */}
-        <div className="absolute inset-0 bg-[radial-gradient(58%_54%_at_30%_50%,rgba(255,255,255,.72)_0%,rgba(255,255,255,.34)_46%,transparent_78%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(52%_48%_at_50%_46%,rgba(255,255,255,.80)_0%,rgba(255,255,255,.42)_48%,transparent_76%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-end gap-8 px-6 pt-24 md:grid-cols-[1fr_1fr] md:gap-4 md:pt-20">
-        {/* النص — يمين */}
-        <div className="hero-in pb-16 text-center md:order-2 md:pb-24 md:text-start">
-          <div className="mb-3 bg-[linear-gradient(94deg,var(--color-blue)_0%,#1C6FA8_46%,#8A6A12_100%)] bg-clip-text text-[clamp(30px,4.6vw,52px)] font-extrabold leading-none tracking-tight text-transparent">
-            رواسي
-          </div>
-
-          <h1 className="text-[clamp(28px,4.4vw,48px)] font-bold leading-[1.32] tracking-tight ">
-            وكلاء وأنظمة أتمتة
-            <br />
-            تعمل داخل عملياتكم
-          </h1>
-
-          <p className="mt-[18px] max-w-[44ch] text-[clamp(15px,1.7vw,18px)] text-[rgba(20,22,26,.72)] mx-auto md:mx-0">
-            نبني ما يتولّى العمل المتكرّر في خدمة العملاء والمبيعات والدعم — لا
-            عروضاً تقديمية.
-          </p>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
-            <a href="#booking" className="btn btn-primary">
-              احجز اجتماعاً ↖
-            </a>
-            <a href="#services" className="btn btn-outline">
-              أعمالنا ↖
-            </a>
-          </div>
-
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-[13px] text-[rgba(20,22,26,.55)] md:justify-start">
-            {/* TODO: استبدل بالرقم الحقيقي قبل النشر */}
-            <span>
-              <b className="text-[var(--color-ink)]">٢٠+</b> شركة في السعودية
-            </span>
-            <span>·</span>
-            <span>جلسة تشخيص ٣٠ دقيقة</span>
-          </div>
+      <div className="hero-in relative z-10 mx-auto w-full max-w-[900px] px-6 pb-16 pt-28 text-center">
+        {/* شارة صغيرة فوق العنوان */}
+        <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white/70 px-4 py-1.5 text-[12.5px] backdrop-blur-sm">
+          <span className="live-dot h-1.5 w-1.5 rounded-full bg-[var(--color-blue)]" aria-hidden />
+          وكالة ذكاء اصطناعي سعودية
         </div>
 
-        {/* الصورة — يسار، تملأ العمود كاملاً حتى أسفل الهيرو */}
-        <div className="relative order-first flex min-h-[420px] items-end justify-center md:order-1 md:min-h-[70vh] md:pb-6">
-          <Image
-            src="/hero.webp"
-            alt="فريق رواسي"
-            width={1000}
-            height={1339}
-            priority
-            sizes="(max-width:768px) 92vw, 46vw"
-            className="portrait-in relative z-10 h-auto max-h-[66vh] w-auto max-w-full object-contain object-bottom"
-          />
+        <h1 className="text-[clamp(32px,6vw,64px)] font-extrabold leading-[1.24] tracking-tight">
+          وكلاء وأنظمة أتمتة
+          <br />
+          <span className="bg-[linear-gradient(94deg,var(--color-blue)_0%,#1C6FA8_52%,#B98A0C_100%)] bg-clip-text text-transparent">
+            تعمل داخل عملياتكم
+          </span>
+        </h1>
+
+        <p className="mx-auto mt-6 max-w-[52ch] text-[clamp(16px,1.9vw,19px)] leading-relaxed text-[rgba(20,22,26,.68)]">
+          نبني ما يتولّى العمل المتكرّر في خدمة العملاء والمبيعات والدعم — لا
+          عروضاً تقديمية.
+        </p>
+
+        <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <a href="#booking" className="btn btn-primary">
+            احجز اجتماعاً ↖
+          </a>
+          <a href="#work" className="btn btn-outline">
+            أعمالنا ↖
+          </a>
+        </div>
+
+        {/* أرقام النتائج — مرجع WRITER على Mobbin */}
+        {/* TODO: استبدل بأرقام حقيقية قبل النشر */}
+        <div className="mt-14 flex flex-wrap items-start justify-center gap-x-10 gap-y-6">
+          <div>
+            <div className="text-[clamp(28px,3.6vw,38px)] font-extrabold leading-none">
+              ٧٠٪
+            </div>
+            <div className="mt-1.5 max-w-[18ch] text-[12.5px] leading-snug text-[rgba(20,22,26,.55)]">
+              اختصار في زمن الرد على العملاء
+            </div>
+          </div>
+          <div className="h-11 w-px bg-[var(--line)]" aria-hidden />
+          <div>
+            <div className="text-[clamp(28px,3.6vw,38px)] font-extrabold leading-none">
+              ٢٠+
+            </div>
+            <div className="mt-1.5 max-w-[18ch] text-[12.5px] leading-snug text-[rgba(20,22,26,.55)]">
+              شركة في السعودية
+            </div>
+          </div>
+          <div className="h-11 w-px bg-[var(--line)]" aria-hidden />
+          <div>
+            <div className="text-[clamp(28px,3.6vw,38px)] font-extrabold leading-none">
+              ١٤ يوماً
+            </div>
+            <div className="mt-1.5 max-w-[18ch] text-[12.5px] leading-snug text-[rgba(20,22,26,.55)]">
+              حتى أول نموذج يعمل
+            </div>
+          </div>
         </div>
       </div>
     </header>

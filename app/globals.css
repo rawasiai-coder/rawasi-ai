@@ -40,29 +40,52 @@ body{
    ponytail: الأصفر والأزرق مفصولان مكانياً؛ تداخلهما المباشر يعطي أخضر. */
 .mesh{ position:absolute; inset:-20%; will-change:transform; }
 
-/* الأصفر يحكم النصف الأيمن، الأزرق النصف الأيسر — ٥٠/٥٠ فعلياً */
+/* تخطيط مركزي: اللون على الأطراف والوسط يبقى فاتحاً للنص.
+   الأصفر يمين، الأزرق يسار — ٥٠/٥٠ مع مسافة بينهما تمنع الأخضر. */
 .mesh-warm{
   background:
-    radial-gradient(62% 70% at 88% 26%, #FFD028 0%, transparent 62%),
-    radial-gradient(56% 62% at 74% 88%, #F5A623 0%, transparent 60%);
-  filter:blur(46px);
+    radial-gradient(56% 74% at 96% 22%, #FFD028 0%, transparent 60%),
+    radial-gradient(50% 66% at 88% 92%, #F5A623 0%, transparent 58%);
+  filter:blur(48px);
   animation:meshWarm 28s ease-in-out infinite;
 }
 .mesh-cool{
   background:
-    radial-gradient(62% 70% at 10% 70%, #1878D0 0%, transparent 62%),
-    radial-gradient(56% 60% at 22% 14%, #35B4F0 0%, transparent 58%);
-  filter:blur(46px);
+    radial-gradient(56% 74% at 4% 74%, #1878D0 0%, transparent 60%),
+    radial-gradient(50% 66% at 12% 10%, #35B4F0 0%, transparent 58%);
+  filter:blur(48px);
   animation:meshCool 34s ease-in-out infinite;
 }
 
+/* حركة اللون: إزاحة + تدوير طفيف في درجة اللون — يبقى ضمن الأزرق/الأصفر */
 @keyframes meshWarm{
-  0%,100%{ transform:scale(1.04) translate3d(0,0,0); }
-  50%    { transform:scale(1.10) translate3d(-2%,1.5%,0); }
+  0%,100%{ transform:scale(1.04) translate3d(0,0,0);      filter:blur(48px) hue-rotate(0deg); }
+  33%    { transform:scale(1.11) translate3d(-3%,2%,0);   filter:blur(48px) hue-rotate(-6deg); }
+  66%    { transform:scale(1.07) translate3d(2%,-1%,0);   filter:blur(48px) hue-rotate(5deg); }
 }
 @keyframes meshCool{
-  0%,100%{ transform:scale(1.06) translate3d(0,0,0); }
-  50%    { transform:scale(1.12) translate3d(2%,-1.5%,0); }
+  0%,100%{ transform:scale(1.06) translate3d(0,0,0);      filter:blur(48px) hue-rotate(0deg); }
+  40%    { transform:scale(1.13) translate3d(3%,-2%,0);   filter:blur(48px) hue-rotate(7deg); }
+  70%    { transform:scale(1.05) translate3d(-2%,1.5%,0); filter:blur(48px) hue-rotate(-5deg); }
+}
+
+/* الشارة أعلى الهيرو — نقطة نابضة تدل على أن الموقع "حيّ" */
+@keyframes dotPulse{
+  0%,100%{ transform:scale(1);   opacity:1;   }
+  50%    { transform:scale(1.5); opacity:.55; }
+}
+.live-dot{ animation:dotPulse 2.2s ease-in-out infinite; }
+
+/* الأزرار: لمعة تمرّ عند المرور */
+.btn-primary{ position:relative; overflow:hidden; }
+.btn-primary::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);
+  transform:translateX(-120%);
+  transition:transform 620ms var(--ease-out);
+}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover::after{ transform:translateX(120%); }
 }
 
 .wave{ position:absolute; inset:-30%; will-change:transform; }
@@ -184,7 +207,8 @@ body{
 
 @media (prefers-reduced-motion: reduce){
   .hero-in > *, .portrait-in{ animation:none !important; opacity:1 !important; transform:none !important; }
-  .btn-primary{ animation:none !important; }
+  .btn-primary, .live-dot{ animation:none !important; }
+  .btn-primary::after{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){

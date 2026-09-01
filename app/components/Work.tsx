@@ -2,41 +2,73 @@
 
 import { useState } from "react";
 
-// TODO: استبدل بأعمال حقيقية
-const FILTERS = ["الكل", "وكلاء", "أتمتة", "أنظمة"] as const;
+const FILTERS = ["الكل", "وكلاء", "أتمتة", "تكامل"] as const;
 type Filter = (typeof FILTERS)[number];
 
-const G = {
-  blue: "linear-gradient(140deg,#00A3E0,#3A9DBB)",
-  teal: "linear-gradient(140deg,#3A9DBB,#BBE0FF)",
-  warm: "linear-gradient(140deg,#DF9626,#E8851B)",
-  mix: "linear-gradient(140deg,#00A3E0,#3A9DBB 50%,#DF9626)",
+type Item = {
+  t: string;
+  d: string;
+  tag: Exclude<Filter, "الكل">;
+  icon: string;
 };
 
-const WORK: { t: string; c: string; tag: Exclude<Filter, "الكل">; grad: string }[] = [
-  { t: "وكيل خدمة عملاء", c: "تجزئة", tag: "وكلاء", grad: G.blue },
-  { t: "أتمتة الفوترة", c: "لوجستيات", tag: "أتمتة", grad: G.warm },
-  { t: "لوحة تشغيل", c: "تجارة إلكترونية", tag: "أنظمة", grad: G.mix },
-  { t: "وكيل مبيعات", c: "عقار", tag: "وكلاء", grad: G.teal },
-  { t: "ربط المخزون", c: "تجزئة", tag: "أتمتة", grad: G.warm },
-  { t: "بوابة تقارير", c: "خدمات", tag: "أنظمة", grad: G.blue },
+// ما نقدّمه — لا ما أنجزناه. كلها في نطاق وكلاء AI والأتمتة.
+const OFFERINGS: Item[] = [
+  {
+    t: "وكيل خدمة العملاء",
+    d: "يرد على واتساب والبريد والمحادثات على مدار الساعة، ويصعّد للبشر عند الحاجة فقط.",
+    tag: "وكلاء",
+    icon: "M12 2a5 5 0 0 1 5 5v1h1a3 3 0 0 1 0 6h-1v1a5 5 0 0 1-10 0v-1H6a3 3 0 0 1 0-6h1V7a5 5 0 0 1 5-5Zm-2 8v4m4-4v4",
+  },
+  {
+    t: "وكيل المبيعات",
+    d: "يتابع العملاء المحتملين، يؤهّلهم بأسئلة ذكية، ويحجز الاجتماعات في تقويمكم.",
+    tag: "وكلاء",
+    icon: "M3 17l6-6 4 4 8-8M21 7v5h-5",
+  },
+  {
+    t: "أتمتة العمليات الداخلية",
+    d: "الفواتير والتقارير وإدخال البيانات — سير عمل يعمل بلا تدخّل يومي.",
+    tag: "أتمتة",
+    icon: "M4 6h6M14 6h6M4 18h6M14 18h6M7 6v12M17 6v12M10 12h4",
+  },
+  {
+    t: "أتمتة المحتوى والتسويق",
+    d: "توليد ونشر ومتابعة الحملات عبر قنواتكم، بمراجعة بشرية قبل النشر.",
+    tag: "أتمتة",
+    icon: "M4 4h16v12H5.2L4 17.5V4Zm4 4h8M8 11h5",
+  },
+  {
+    t: "ربط الأنظمة",
+    d: "نصل متجركم ونظام المخزون والمحاسبة وواتساب في مسار واحد متّصل.",
+    tag: "تكامل",
+    icon: "M9 12a3 3 0 0 1 3-3h1a4 4 0 0 0 0-8H9a4 4 0 0 0 0 8m6 0a3 3 0 0 1-3 3h-1a4 4 0 0 0 0 8h4a4 4 0 0 0 0-8",
+  },
+  {
+    t: "لوحات تحكّم وتقارير",
+    d: "رقم واحد صحيح بدل خمسة ملفات إكسل — يتحدّث نفسه لحظياً.",
+    tag: "تكامل",
+    icon: "M3 5h18v14H3zM3 9h18M7 13h5M7 16h8",
+  },
 ];
 
 export default function Work() {
   const [active, setActive] = useState<Filter>("الكل");
-  const shown = active === "الكل" ? WORK : WORK.filter((w) => w.tag === active);
+  const shown =
+    active === "الكل" ? OFFERINGS : OFFERINGS.filter((w) => w.tag === active);
 
   return (
     <section id="work" className="rv mx-auto max-w-[1120px] px-6 py-24">
-      <div className="mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]">أعمالنا</div>
+      <div className="mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]">
+        ما نقدّمه
+      </div>
       <h2 className="text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
-        ما بنيناه
+        وكلاء وأتمتة تعمل نيابةً عنكم
       </h2>
       <p className="mt-2.5 max-w-[54ch] text-[var(--dim)]">
-        كل مشروع بدأ بعملية يدوية مكرّرة وانتهى بنظام يعمل وحده.
+        كل خدمة تبدأ من عملية يدوية متكرّرة وتنتهي بنظام يعمل وحده.
       </p>
 
-      {/* المرشّحات */}
       <div className="mt-7 flex flex-wrap gap-2.5">
         {FILTERS.map((f) => (
           <button
@@ -45,7 +77,7 @@ export default function Work() {
             aria-pressed={active === f}
             className={`rounded-full border px-5 py-2 text-sm transition-colors ${
               active === f
-                ? "border-[var(--color-blue)] bg-[var(--color-blue)] font-bold text-[var(--color-ink)]"
+                ? "border-[var(--color-blue)] bg-[var(--color-blue)] font-bold text-white"
                 : "border-[var(--line)] text-[var(--dim)] hover:border-black/30 hover:text-[var(--color-ink)]"
             }`}
           >
@@ -58,24 +90,30 @@ export default function Work() {
         {shown.map((w) => (
           <article
             key={w.t}
-            className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform] duration-200 lift hover:border-black/15"
+            className="lift group rounded-2xl border border-[var(--line)] bg-[var(--color-panel)] p-6 shadow-[0_1px_3px_rgba(20,22,26,.06)] transition-[border-color,transform] duration-200 hover:border-black/15"
           >
-            {/* صورة مصغّرة بتدرّج مختلف لكل مشروع — تُستبدل بلقطة حقيقية لاحقاً */}
-            <div
-              className="relative aspect-[16/10] overflow-hidden"
-              style={{ background: w.grad }}
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_20%_0%,rgba(255,255,255,.45),transparent_60%)]" />
-              <div className="absolute bottom-3 start-3 rounded-md bg-white/85 px-2.5 py-1 text-[11px] font-bold text-[var(--color-ink)] backdrop-blur-sm">
+            <div className="mb-5 flex items-center justify-between">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-[rgba(0,163,224,.10)] text-[var(--color-blue)] transition-colors duration-200 group-hover:bg-[rgba(0,163,224,.18)]">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d={w.icon} />
+                </svg>
+              </div>
+              <span className="rounded-full bg-[rgba(20,22,26,.05)] px-2.5 py-1 text-[11px] text-[var(--dim)]">
                 {w.tag}
-              </div>
+              </span>
             </div>
-            <div className="p-5">
-              <div className="mb-1 text-[11.5px] tracking-[.14em] text-[var(--dim)]">
-                {w.c}
-              </div>
-              <h3 className="text-[17px] font-bold">{w.t}</h3>
-            </div>
+            <h3 className="mb-2 text-[18px] font-bold">{w.t}</h3>
+            <p className="text-[14.5px] leading-relaxed text-[var(--dim)]">{w.d}</p>
           </article>
         ))}
       </div>
