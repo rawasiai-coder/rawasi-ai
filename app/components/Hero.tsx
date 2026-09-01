@@ -1,28 +1,30 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
-    <header className="relative flex min-h-[92vh] items-center overflow-hidden">
-      {/* موجة التدرّج — ثلاث طبقات بسرعات مختلفة */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="wave wave-a" />
-        <div className="wave wave-b" />
-        <div className="wave wave-c" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,9,11,.10)_0%,rgba(8,9,11,.30)_55%,rgba(8,9,11,.72)_100%)]" />
+    <header className="relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
+      {/* تدرّج شبكي ناعم — مرجع: Hims على Mobbin. أصفر يمين، أزرق يسار. */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="mesh mesh-warm" />
+        <div className="mesh mesh-cool" />
+        {/* حجاب فاتح خلف النص فقط ليبقى مقروءاً */}
+        <div className="absolute inset-0 bg-[radial-gradient(58%_54%_at_30%_50%,rgba(255,255,255,.72)_0%,rgba(255,255,255,.34)_46%,transparent_78%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-[1120px] grid-cols-1 items-center gap-10 px-6 pt-24 pb-10 md:grid-cols-[1.02fr_.98fr]">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-end gap-8 px-6 pt-24 md:grid-cols-[1fr_1fr] md:gap-4 md:pt-20">
         {/* النص — يمين */}
-        <div className="text-center md:text-right">
-          <div className="mb-3 bg-[linear-gradient(94deg,var(--color-sky)_6%,var(--color-blue)_34%,var(--color-teal)_60%,var(--color-amber)_88%)] bg-clip-text text-[clamp(30px,4.6vw,52px)] font-extrabold leading-none tracking-tight text-transparent">
+        <div className="hero-in pb-16 text-center md:order-2 md:pb-24 md:text-start">
+          <div className="mb-3 bg-[linear-gradient(94deg,var(--color-blue)_0%,#1C6FA8_46%,#8A6A12_100%)] bg-clip-text text-[clamp(30px,4.6vw,52px)] font-extrabold leading-none tracking-tight text-transparent">
             رواسي
           </div>
 
-          <h1 className="text-[clamp(28px,4.4vw,48px)] font-bold leading-[1.32] tracking-tight [text-shadow:0_2px_26px_rgba(0,0,0,.4)]">
+          <h1 className="text-[clamp(28px,4.4vw,48px)] font-bold leading-[1.32] tracking-tight ">
             وكلاء وأنظمة أتمتة
             <br />
             تعمل داخل عملياتكم
           </h1>
 
-          <p className="mt-[18px] max-w-[44ch] text-[clamp(15px,1.7vw,18px)] text-white/85 md:mr-0 mx-auto md:mx-0">
+          <p className="mt-[18px] max-w-[44ch] text-[clamp(15px,1.7vw,18px)] text-[rgba(20,22,26,.72)] mx-auto md:mx-0">
             نبني ما يتولّى العمل المتكرّر في خدمة العملاء والمبيعات والدعم — لا
             عروضاً تقديمية.
           </p>
@@ -36,40 +38,27 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-[13px] text-[var(--dim)] md:justify-start">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-[13px] text-[rgba(20,22,26,.55)] md:justify-start">
             {/* TODO: استبدل بالرقم الحقيقي قبل النشر */}
             <span>
-              <b className="text-white">٢٠+</b> شركة في السعودية
+              <b className="text-[var(--color-ink)]">٢٠+</b> شركة في السعودية
             </span>
             <span>·</span>
             <span>جلسة تشخيص ٣٠ دقيقة</span>
           </div>
         </div>
 
-        {/* الصورة — يسار */}
-        <div className="relative order-first grid min-h-[400px] place-items-center md:order-none">
-          <div
-            className="absolute aspect-square w-[82%] rounded-full opacity-60 blur-[58px]"
-            style={{
-              background:
-                "radial-gradient(circle,var(--color-blue) 0%,var(--color-teal) 34%,var(--color-amber) 64%,transparent 74%)",
-            }}
-            aria-hidden
+        {/* الصورة — يسار، تملأ العمود كاملاً حتى أسفل الهيرو */}
+        <div className="relative order-first flex min-h-[420px] items-end justify-center md:order-1 md:min-h-[70vh] md:pb-6">
+          <Image
+            src="/hero.webp"
+            alt="فريق رواسي"
+            width={1000}
+            height={1339}
+            priority
+            sizes="(max-width:768px) 92vw, 46vw"
+            className="portrait-in relative z-10 h-auto max-h-[66vh] w-auto max-w-full object-contain object-bottom"
           />
-          <div className="relative z-10 aspect-[4/5] w-full max-w-[440px] overflow-hidden rounded-[20px] border border-dashed border-white/25 bg-white/5 backdrop-blur-[3px]">
-            {/* ضع hero.png في public/ ثم استبدل هذا البديل بـ:
-                <Image src="/hero.png" alt="" fill className="object-contain" priority />
-                (وأضف import Image from "next/image" أعلى الملف) */}
-            <div className="grid h-full place-items-center text-center text-sm leading-loose text-[var(--dim)]">
-              <div>
-                <div className="text-3xl">🖼️</div>
-                <div>مكان الصورة</div>
-                <small className="block text-[11.5px] opacity-70">
-                  ضع hero.png في public/
-                </small>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </header>

@@ -12,7 +12,7 @@ export default function Booking() {
     if (!CALENDLY_URL || !box.current) return;
 
     const theme =
-      "hide_gdpr_banner=1&background_color=0F1114&text_color=FFFFFF&primary_color=00A3E0";
+      "hide_gdpr_banner=1&background_color=FFFFFF&text_color=14161A&primary_color=00A3E0";
     const widget = document.createElement("div");
     widget.className = "calendly-inline-widget";
     widget.dataset.url =
@@ -31,7 +31,7 @@ export default function Booking() {
   }, []);
 
   return (
-    <section id="booking" className="border-y border-[var(--line)] bg-[var(--color-panel)]">
+    <section id="booking" className="border-y border-[var(--line)] bg-[#EFEEF3]">
       <div className="rv mx-auto max-w-[1120px] px-6 py-24">
         <div className="mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]">احجز موعدك</div>
         <h2 className="text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
@@ -44,7 +44,7 @@ export default function Booking() {
         <div
           ref={box}
           dir="ltr"
-          className="relative mt-7 min-h-[420px] overflow-hidden rounded-2xl border border-[var(--line)] bg-[#0A0C0F]"
+          className="relative mt-7 min-h-[420px] overflow-hidden rounded-2xl border border-[var(--line)] bg-white"
         >
           {/* البديل — يبقى حتى يُضبط CALENDLY_URL */}
           <div dir="rtl" className="grid h-full min-h-[420px] place-content-center p-10 text-center">

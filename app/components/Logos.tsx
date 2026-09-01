@@ -12,7 +12,7 @@ export default function Logos() {
           {CLIENTS.map((c) => (
             <div
               key={c}
-              className="grid h-11 min-w-[124px] place-items-center rounded-lg border border-dashed border-white/15 px-5 text-[13px] text-white/35"
+              className="grid h-11 min-w-[124px] place-items-center rounded-lg border border-dashed border-black/15 px-5 text-[13px] text-black/40"
             >
               {c}
             </div>

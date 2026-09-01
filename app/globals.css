@@ -8,25 +8,26 @@
 @font-face{ font-family:"Thmanyah"; src:url("/fonts/thmanyahsans-Black.woff2") format("woff2");   font-weight:800; font-display:swap; }
 
 @theme{
-  --color-ink:#08090B;
-  --color-panel:#0F1114;
+  --color-ink:#14161A;        /* النص الأساسي */
+  --color-bg:#F6F5F8;         /* خلفية الصفحة — رمادي دافئ لا أبيض صارخ */
+  --color-panel:#FFFFFF;      /* البطاقات */
   --color-blue:#00A3E0;
   --color-sky:#BBE0FF;
   --color-teal:#3A9DBB;
-  --color-amber:#DF9626;
-  --color-orange:#E8851B;
+  --color-amber:#F2C230;   /* أصفر ذهبي — كان #DF9626 */
+  --color-orange:#F5A623;  /* أصفر برتقالي — كان #E8851B */
   --font-sans:"Thmanyah","Segoe UI",Tahoma,Arial,sans-serif;
 }
 
 :root{
-  --line:rgba(255,255,255,.12);
-  --dim:rgba(255,255,255,.58);
+  --line:rgba(20,22,26,.10);
+  --dim:rgba(20,22,26,.60);
   --ease-out:cubic-bezier(.23,1,.32,1);
 }
 
 html{ scroll-behavior:smooth; }
 body{
-  background:var(--color-ink); color:#fff;
+  background:var(--color-bg); color:var(--color-ink);
   font-family:var(--font-sans); line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
@@ -35,25 +36,64 @@ body{
 /* ---------- موجة التدرّج ----------
    ثلاث طبقات تتحرك بسرعات مختلفة فتتداخل كموجة.
    CSS خالص: تعمل خارج الخيط الرئيسي ولا تُسقط إطارات عند انشغال المتصفح. */
+/* تدرّج شبكي ناعم — طبقتان تتحرّكان ببطء.
+   ponytail: الأصفر والأزرق مفصولان مكانياً؛ تداخلهما المباشر يعطي أخضر. */
+.mesh{ position:absolute; inset:-20%; will-change:transform; }
+
+/* الأصفر يحكم النصف الأيمن، الأزرق النصف الأيسر — ٥٠/٥٠ فعلياً */
+.mesh-warm{
+  background:
+    radial-gradient(62% 70% at 88% 26%, #FFD028 0%, transparent 62%),
+    radial-gradient(56% 62% at 74% 88%, #F5A623 0%, transparent 60%);
+  filter:blur(46px);
+  animation:meshWarm 28s ease-in-out infinite;
+}
+.mesh-cool{
+  background:
+    radial-gradient(62% 70% at 10% 70%, #1878D0 0%, transparent 62%),
+    radial-gradient(56% 60% at 22% 14%, #35B4F0 0%, transparent 58%);
+  filter:blur(46px);
+  animation:meshCool 34s ease-in-out infinite;
+}
+
+@keyframes meshWarm{
+  0%,100%{ transform:scale(1.04) translate3d(0,0,0); }
+  50%    { transform:scale(1.10) translate3d(-2%,1.5%,0); }
+}
+@keyframes meshCool{
+  0%,100%{ transform:scale(1.06) translate3d(0,0,0); }
+  50%    { transform:scale(1.12) translate3d(2%,-1.5%,0); }
+}
+
 .wave{ position:absolute; inset:-30%; will-change:transform; }
 
+/* تدفّق قطري: أصفر من أعلى اليمين ← أزرق في أسفل اليسار.
+   ponytail: طبقة خطية واحدة تضمن التدرّج المتصل — الدوائر وحدها تعطي بقعاً. */
+/* ponytail: الأصفر والأزرق متكاملان — أي مزج مباشر يمرّ بالأخضر.
+   الحل تمرير الانتقال عبر داكن محايد لا عبر لون وسيط. */
 .wave-a{
-  background:
-    radial-gradient(46% 54% at 84% 12%, var(--color-blue) 0%, transparent 64%),
-    radial-gradient(42% 48% at 50% 4%,  var(--color-sky) 0%, transparent 60%);
-  filter:blur(48px) saturate(150%);
+  background:linear-gradient(118deg,
+    var(--color-amber) 0%,
+    var(--color-orange) 18%,
+    #6B5A22 38%,          /* داكن دافئ */
+    #14161A 52%,          /* محايد — يكسر مسار الأخضر */
+    #14364A 66%,          /* داكن بارد */
+    var(--color-blue) 100%);
+  filter:blur(44px) saturate(140%);
   animation:waveA 19s ease-in-out infinite;
 }
 .wave-b{
   background:
-    radial-gradient(52% 56% at 14% 36%, var(--color-teal) 0%, transparent 66%),
-    radial-gradient(58% 60% at 64% 74%, var(--color-amber) 0%, transparent 70%);
-  filter:blur(56px) saturate(148%);
+    radial-gradient(40% 46% at 4% 6%, var(--color-amber) 0%, transparent 54%),
+    radial-gradient(42% 48% at 98% 96%, var(--color-blue) 0%, transparent 56%);
+  filter:blur(58px) saturate(150%);
+  opacity:.8;
   animation:waveB 25s ease-in-out infinite;
 }
 .wave-c{
-  background:radial-gradient(56% 58% at 26% 92%, var(--color-orange) 0%, transparent 68%);
-  filter:blur(60px) saturate(145%);
+  background:radial-gradient(34% 36% at 92% 84%, var(--color-sky) 0%, transparent 52%);
+  filter:blur(64px) saturate(140%);
+  opacity:.42;
   animation:waveC 31s ease-in-out infinite;
 }
 
@@ -79,12 +119,24 @@ body{
   transition:transform 160ms var(--ease-out), background 200ms ease, border-color 200ms ease;
 }
 .btn:active{ transform:scale(.97); }
-.btn-primary{ background:#fff; color:var(--color-ink); }
+
+/* أزرار على خلفية فاتحة */
+.btn-primary{ background:var(--color-ink); color:#fff; }
+.btn-primary:hover{ background:#2A2E36; }
 .btn-outline{
-  background:rgba(255,255,255,.08); color:#fff;
-  border:1.5px solid rgba(255,255,255,.72); backdrop-filter:blur(6px);
+  background:transparent; color:var(--color-ink);
+  border:1.5px solid rgba(20,22,26,.28);
 }
-.btn-outline:hover{ background:rgba(255,255,255,.18); border-color:#fff; }
+.btn-outline:hover{ background:rgba(20,22,26,.06); border-color:rgba(20,22,26,.5); }
+
+/* أزرار داخل الهيرو الداكن — تنقلب */
+.on-dark .btn-primary{ background:#fff; color:var(--color-ink); }
+.on-dark .btn-primary:hover{ background:#F0EFF3; }
+.on-dark .btn-outline{
+  background:rgba(255,255,255,.10); color:#fff;
+  border-color:rgba(255,255,255,.72); backdrop-filter:blur(6px);
+}
+.on-dark .btn-outline:hover{ background:rgba(255,255,255,.2); border-color:#fff; }
 
 /* كشف عند الظهور.
    ponytail: الإخفاء يُفعّله JS عبر .js-rv على <html> — بلا JS يبقى كل شيء ظاهراً
@@ -93,8 +145,50 @@ body{
 .rv{ transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
 .js-rv .rv.in{ opacity:1; transform:none; }
 
+/* تتابع داخل الشبكات — 50ms بين البطاقات */
+.js-rv .rv .grid > *{ opacity:0; transform:translateY(10px);
+  transition:opacity 460ms var(--ease-out), transform 460ms var(--ease-out); }
+.js-rv .rv.in .grid > *{ opacity:1; transform:none; }
+.js-rv .rv.in .grid > *:nth-child(2){ transition-delay:50ms; }
+.js-rv .rv.in .grid > *:nth-child(3){ transition-delay:100ms; }
+.js-rv .rv.in .grid > *:nth-child(4){ transition-delay:150ms; }
+.js-rv .rv.in .grid > *:nth-child(5){ transition-delay:200ms; }
+.js-rv .rv.in .grid > *:nth-child(6){ transition-delay:250ms; }
+
+/* ---------- دخول الهيرو: تتابع 60ms ---------- */
+@keyframes riseIn{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:none; } }
+.hero-in > *{ opacity:0; animation:riseIn 560ms var(--ease-out) forwards; }
+.hero-in > *:nth-child(1){ animation-delay:60ms; }
+.hero-in > *:nth-child(2){ animation-delay:120ms; }
+.hero-in > *:nth-child(3){ animation-delay:180ms; }
+.hero-in > *:nth-child(4){ animation-delay:240ms; }
+.hero-in > *:nth-child(5){ animation-delay:300ms; }
+
+/* الصورة تنزلق من الأسفل */
+@keyframes portraitIn{ from{ opacity:0; transform:translateY(28px) scale(.985); } to{ opacity:1; transform:none; } }
+.portrait-in{ animation:portraitIn 760ms var(--ease-out) 140ms backwards; }
+
+/* نبض خفيف على الزر الأساسي — يلفت دون إزعاج */
+@keyframes softPulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(20,22,26,.22); }
+  50%    { box-shadow:0 0 0 10px rgba(20,22,26,0); }
+}
+.btn-primary{ animation:softPulse 3.4s ease-out 2s infinite; }
+.btn-primary:hover{ animation:none; }
+
+/* بطاقات ترتفع عند المرور */
+@media (hover:hover) and (pointer:fine){
+  .lift{ transition:transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out); }
+  .lift:hover{ transform:translateY(-4px); box-shadow:0 12px 32px rgba(20,22,26,.12); }
+}
+
 @media (prefers-reduced-motion: reduce){
-  .wave{ animation:none !important; }
+  .hero-in > *, .portrait-in{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .btn-primary{ animation:none !important; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .wave, .mesh{ animation:none !important; }
   .rv{ transition:opacity 200ms ease; transform:none; }
   html{ scroll-behavior:auto; }
 }
