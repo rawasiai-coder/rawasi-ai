@@ -8,7 +8,7 @@ const LINKS = [
 export default function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[rgba(246,245,248,.82)] backdrop-blur-[14px]">
-      <div dir="ltr" className="mx-auto flex max-w-[1240px] items-center gap-4 px-6 py-3">
+      <div dir="ltr" className="flex w-full items-center gap-4 px-6 py-3 md:px-8">
         {/* يسار — العلامة مع الاسم */}
         <a href="#" className="flex shrink-0 items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}

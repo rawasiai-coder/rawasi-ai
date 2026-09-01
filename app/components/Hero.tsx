@@ -32,10 +32,10 @@ export default function Hero() {
 
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <a href="#booking" className="btn btn-primary">
-            احجز اجتماعاً ↖
+            احجز اجتماعاً
           </a>
           <a href="#work" className="btn btn-outline">
-            ما نقدّمه ↖
+            ما نقدّمه
           </a>
         </div>
 
