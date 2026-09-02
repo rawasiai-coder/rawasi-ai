@@ -33,6 +33,50 @@ body{
 }
 .en{ direction:ltr; unicode-bidi:isolate; }
 
+/* ==========================================================================
+   الاتجاه — RTL كمتطلّب أساسي لا كسمة على <html>
+   ========================================================================== */
+
+/* العربية نصّ متّصل: أي letter-spacing يكسر وصل الحروف داخل الكلمة.
+   القاعدة تُلغيه على كل عنوان وسطر تمهيدي عربي، وتترك اللاتيني (.en) وشأنه —
+   فالنسخة الإنجليزية تحتفظ بـ tracking-tight والتباعد الواسع في السطر التمهيدي.
+   الخصوصية (0,2,0) تتجاوز أدوات tracking-* في Tailwind عمداً — حتى لا يعود
+   الخلل عند إضافة الأداة مرة أخرى بحسن نيّة. */
+[dir="rtl"] :is(h1,h2,h3,h4,h5,.eyebrow):not(.en){ letter-spacing:normal; }
+
+/* السطر التمهيدي فوق كل عنوان — التباعد افتراضي، ويُلغى في العربية أعلاه */
+.eyebrow{ font-size:12px; color:var(--dim); letter-spacing:.18em; }
+
+/* علامات الاقتباس تتبع اللغة لا النصّ المكتوب في القاموس */
+.quote::before{ content:"\201C"; }
+.quote::after{ content:"\201D"; }
+[dir="rtl"] .quote::before{ content:"\00AB"; }
+[dir="rtl"] .quote::after{ content:"\00BB"; }
+
+/* الأيقونات الاتجاهية: أسهم الاتجاه، فقاعات الحديث، أسطر المحتوى.
+   تُعكس أفقياً في RTL فقط — الأيقونات المتماثلة لا تأخذ هذا الصنف. */
+[dir="rtl"] .icon-flip{ transform:scaleX(-1); }
+
+/* التدرّج يبدأ من جهة القراءة: يسار←يمين في اللاتينية، والعكس في العربية.
+   inline-block يجعل الجملة الملوّنة تنتقل كوحدة إلى السطر التالي بدل أن
+   تنكسر في منتصفها — العبارة الإنجليزية أطول من العربية فتحتاج ذلك. */
+.grad-accent{
+  display:inline-block;
+  background-image:linear-gradient(94deg,#1C6FA8 0%,#B98A0C 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+[dir="rtl"] .grad-accent{
+  background-image:linear-gradient(266deg,#1C6FA8 0%,#B98A0C 100%);
+}
+
+/* ---------- قائمة الجوال ----------
+   لوحة تنسدل تحت الشريط لا درجاً جانبياً: الحركة رأسية فتبقى صحيحة
+   في الاتجاهين بلا نسخة معكوسة. المحاذاة وحدها منطقية. */
+/* ---------- قائمة الجوال ----------
+   ponytail: كل الحالة عبر أدوات Tailwind في المكوّن لا عبر أصناف هنا —
+   الحركة رأسية (max-height/opacity) فتبقى صحيحة في الاتجاهين بلا نسخة معكوسة،
+   والمحاذاة وحدها منطقية عبر text-start. */
+
 /* ---------- موجة التدرّج ----------
    ثلاث طبقات تتحرك بسرعات مختلفة فتتداخل كموجة.
    CSS خالص: تعمل خارج الخيط الرئيسي ولا تُسقط إطارات عند انشغال المتصفح. */
@@ -168,15 +212,19 @@ body{
 .rv{ transition:opacity 420ms var(--ease-out), transform 420ms var(--ease-out); }
 .js-rv .rv.in{ opacity:1; transform:none; }
 
-/* تتابع داخل الشبكات — 50ms بين البطاقات */
-.js-rv .rv .grid > *{ opacity:0; transform:translateY(10px);
+/* تتابع داخل الشبكات — 50ms بين البطاقات.
+   ponytail: صنف .stagger صريح لا .grid. أداة grid في Tailwind مستخدمة أيضاً
+   لتوسيط الأيقونات، فكان المحدّد القديم يطال كل <svg> داخل بطاقة ويفرض عليها
+   transform:none — وهو ما كان يبتلع قلب الأيقونات الاتجاهية في RTL.
+   الترتيب nth-child صحيح في الاتجاهين: الطفل الأول هو الأول في القراءة. */
+.js-rv .rv .stagger > *{ opacity:0; transform:translateY(10px);
   transition:opacity 460ms var(--ease-out), transform 460ms var(--ease-out); }
-.js-rv .rv.in .grid > *{ opacity:1; transform:none; }
-.js-rv .rv.in .grid > *:nth-child(2){ transition-delay:50ms; }
-.js-rv .rv.in .grid > *:nth-child(3){ transition-delay:100ms; }
-.js-rv .rv.in .grid > *:nth-child(4){ transition-delay:150ms; }
-.js-rv .rv.in .grid > *:nth-child(5){ transition-delay:200ms; }
-.js-rv .rv.in .grid > *:nth-child(6){ transition-delay:250ms; }
+.js-rv .rv.in .stagger > *{ opacity:1; transform:none; }
+.js-rv .rv.in .stagger > *:nth-child(2){ transition-delay:50ms; }
+.js-rv .rv.in .stagger > *:nth-child(3){ transition-delay:100ms; }
+.js-rv .rv.in .stagger > *:nth-child(4){ transition-delay:150ms; }
+.js-rv .rv.in .stagger > *:nth-child(5){ transition-delay:200ms; }
+.js-rv .rv.in .stagger > *:nth-child(6){ transition-delay:250ms; }
 
 /* ---------- دخول الهيرو: تتابع 60ms ---------- */
 @keyframes riseIn{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:none; } }
@@ -217,4 +265,5 @@ body{
   .wave, .mesh{ animation:none !important; }
   .rv{ transition:opacity 200ms ease; transform:none; }
   html{ scroll-behavior:auto; }
+  .site-nav{ transition:none !important; }
 }
