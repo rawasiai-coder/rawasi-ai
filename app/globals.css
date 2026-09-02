@@ -44,29 +44,29 @@ body{
    الأصفر يمين، الأزرق يسار — ٥٠/٥٠ مع مسافة بينهما تمنع الأخضر. */
 .mesh-warm{
   background:
-    radial-gradient(56% 74% at 96% 22%, #FFD028 0%, transparent 60%),
-    radial-gradient(50% 66% at 88% 92%, #F5A623 0%, transparent 58%);
-  filter:blur(48px);
+    radial-gradient(64% 82% at 98% 20%, #FFC400 0%, transparent 66%),
+    radial-gradient(58% 74% at 86% 96%, #F09000 0%, transparent 64%);
+  filter:blur(44px) saturate(125%);
   animation:meshWarm 28s ease-in-out infinite;
 }
 .mesh-cool{
   background:
-    radial-gradient(56% 74% at 4% 74%, #1878D0 0%, transparent 60%),
-    radial-gradient(50% 66% at 12% 10%, #35B4F0 0%, transparent 58%);
-  filter:blur(48px);
+    radial-gradient(64% 82% at 2% 76%, #0B63C4 0%, transparent 66%),
+    radial-gradient(58% 72% at 10% 6%, #12A5EE 0%, transparent 64%);
+  filter:blur(44px) saturate(125%);
   animation:meshCool 34s ease-in-out infinite;
 }
 
 /* حركة اللون: إزاحة + تدوير طفيف في درجة اللون — يبقى ضمن الأزرق/الأصفر */
 @keyframes meshWarm{
-  0%,100%{ transform:scale(1.04) translate3d(0,0,0);      filter:blur(48px) hue-rotate(0deg); }
-  33%    { transform:scale(1.11) translate3d(-3%,2%,0);   filter:blur(48px) hue-rotate(-6deg); }
-  66%    { transform:scale(1.07) translate3d(2%,-1%,0);   filter:blur(48px) hue-rotate(5deg); }
+  0%,100%{ transform:scale(1.04) translate3d(0,0,0);      filter:blur(44px) saturate(125%) hue-rotate(0deg); }
+  33%    { transform:scale(1.11) translate3d(-3%,2%,0);   filter:blur(44px) saturate(125%) hue-rotate(-6deg); }
+  66%    { transform:scale(1.07) translate3d(2%,-1%,0);   filter:blur(44px) saturate(125%) hue-rotate(5deg); }
 }
 @keyframes meshCool{
-  0%,100%{ transform:scale(1.06) translate3d(0,0,0);      filter:blur(48px) hue-rotate(0deg); }
-  40%    { transform:scale(1.13) translate3d(3%,-2%,0);   filter:blur(48px) hue-rotate(7deg); }
-  70%    { transform:scale(1.05) translate3d(-2%,1.5%,0); filter:blur(48px) hue-rotate(-5deg); }
+  0%,100%{ transform:scale(1.06) translate3d(0,0,0);      filter:blur(44px) saturate(125%) hue-rotate(0deg); }
+  40%    { transform:scale(1.13) translate3d(3%,-2%,0);   filter:blur(44px) saturate(125%) hue-rotate(7deg); }
+  70%    { transform:scale(1.05) translate3d(-2%,1.5%,0); filter:blur(44px) saturate(125%) hue-rotate(-5deg); }
 }
 
 /* الشارة أعلى الهيرو — نقطة نابضة تدل على أن الموقع "حيّ" */
