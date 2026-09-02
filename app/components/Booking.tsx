@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { eyebrow, h2, lede } from "./styles";
 
 // ضع رابط حساب رواسي هنا (أو NEXT_PUBLIC_CALENDLY_URL في .env.local)
 const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "";
@@ -33,14 +34,14 @@ export default function Booking() {
   return (
     <section id="booking" className="border-y border-[var(--line)] bg-[#EFEEF3]">
       <div className="rv mx-auto max-w-[1120px] px-6 py-24">
-        <div className="mb-3.5 text-xs tracking-[.18em] text-[var(--dim)]">احجز موعدك</div>
-        <h2 className="text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
-          جاهزون نبدأ؟
-        </h2>
-        <p className="mt-2.5 max-w-[52ch] text-[var(--dim)]">
+        <div className={eyebrow}>احجز موعدك</div>
+        <h2 className={h2}>جاهزون نبدأ؟</h2>
+        <p className={`${lede} max-w-[52ch]`}>
           جلسة ساعة. نخرج منها بخطة واضحة — سواء عملنا معاً أو لا.
         </p>
 
+        {/* ponytail: dir="ltr" مقصود — أداة Calendly مبنية للاتينية وقلبها
+            يكسر تخطيطها الداخلي. البديل بالأسفل يستعيد RTL لمحتواه العربي. */}
         <div
           ref={box}
           dir="ltr"

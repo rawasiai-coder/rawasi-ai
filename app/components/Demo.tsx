@@ -13,6 +13,10 @@ const CHAT = [
   { who: "الوكيل", text: "حدّثت حالة الطلب وأرسلت رابط التتبّع.", me: true },
 ];
 
+// ponytail: أرقام هندية عربية — المحتوى يستخدم ٢٤٨١ فلا تُخلط بأرقام لاتينية.
+// ثابت لا toLocaleString: يضمن تطابق الخادم والعميل عند الترطيب.
+const AR_DIGITS = ["١", "٢", "٣", "٤", "٥"] as const;
+
 const FLOW = [
   "طلب جديد",
   "تحقّق المخزون",
@@ -68,7 +72,7 @@ export default function Demo() {
             {CHAT.slice(0, step).map((m, i) => (
               <div
                 key={i}
-                className={`msg-in flex ${m.me ? "justify-start" : "justify-end"}`}
+                className={`msg-in flex ${m.me ? "justify-end" : "justify-start"}`}
               >
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-[14px] leading-relaxed ${
@@ -81,8 +85,11 @@ export default function Demo() {
                 </div>
               </div>
             ))}
+            {/* ponytail: الوارد من العميل يبدأ من جهة القراءة (يمين بالعربية)
+                والصادر من الوكيل ينتهي إليها — مثل تطبيقات المحادثة المعرّبة.
+                justify-start/end منطقيّان فينقلبان وحدهما مع الاتجاه. */}
             {step < CHAT.length && (
-              <div className={`flex ${CHAT[step].me ? "justify-start" : "justify-end"}`}>
+              <div className={`flex ${CHAT[step].me ? "justify-end" : "justify-start"}`}>
                 <div className="flex gap-1 rounded-2xl bg-[rgba(20,22,26,.05)] px-4 py-3">
                   <i className="dot" /><i className="dot" /><i className="dot" />
                 </div>
@@ -106,7 +113,7 @@ export default function Demo() {
                         : "bg-[rgba(20,22,26,.08)] text-[var(--dim)]"
                     } ${active ? "scale-110" : ""}`}
                   >
-                    {done ? "✓" : i + 1}
+                    {done ? "✓" : AR_DIGITS[i]}
                   </span>
                   <span
                     className={`text-[14px] transition-colors duration-300 ${
@@ -115,7 +122,9 @@ export default function Demo() {
                   >
                     {n}
                   </span>
-                  <span className="mr-auto h-px flex-1 bg-[var(--line)]">
+                  {/* ponytail: flex-1 يملأ الفراغ وحده — mr-auto كان هامشاً
+                      فيزيائياً يدفع في الاتجاه الخطأ عند قلب الاتجاه. */}
+                  <span className="h-px flex-1 bg-[var(--line)]">
                     <span
                       className="block h-px bg-[var(--color-blue)] transition-all duration-500"
                       style={{ width: done ? "100%" : "0%" }}

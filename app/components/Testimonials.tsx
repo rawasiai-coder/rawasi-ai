@@ -1,3 +1,5 @@
+import { eyebrow, h2 } from "./styles";
+
 // شهادات حقيقية — أسماء وشركات فعلية
 const QUOTES = [
   {
@@ -30,14 +32,10 @@ export default function Testimonials() {
   return (
     <section className="rv border-y border-[var(--line)] bg-[#EFEEF3]">
       <div className="mx-auto max-w-[1120px] px-6 py-24">
-        <div className="mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]">
-          شهادات العملاء
-        </div>
-        <h2 className="text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
-          ماذا يقولون عنّا
-        </h2>
+        <div className={eyebrow}>شهادات العملاء</div>
+        <h2 className={h2}>ماذا يقولون عنّا</h2>
 
-        <div className="mt-9 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger mt-9 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {QUOTES.map((t) => (
             <figure
               key={t.co}

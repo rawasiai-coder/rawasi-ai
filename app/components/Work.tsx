@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { eyebrow, h2, lede } from "./styles";
 
 const FILTERS = ["الكل", "وكلاء", "أتمتة", "تكامل"] as const;
 type Filter = (typeof FILTERS)[number];
@@ -10,6 +11,8 @@ type Item = {
   d: string;
   tag: Exclude<Filter, "الكل">;
   icon: string;
+  /** أيقونة لها اتجاه قراءة — تُعكس أفقياً في العربية */
+  flip?: true;
 };
 
 // ما نقدّمه — لا ما أنجزناه. كلها في نطاق وكلاء AI والأتمتة.
@@ -24,7 +27,9 @@ const OFFERINGS: Item[] = [
     t: "لا فرصة تضيع بلا متابعة",
     d: "وكيل يتابع كل من تواصل معكم، يؤهّله بأسئلة ذكية، ويحجز الاجتماع في تقويمكم.",
     tag: "وكلاء",
+    // سهم نموّ يصعد نحو نهاية المحور الزمني — والزمن يجري يساراً في العربية
     icon: "M3 17l6-6 4 4 8-8M21 7v5h-5",
+    flip: true,
   },
   {
     t: "ساعات تعود لفريقكم",
@@ -36,7 +41,9 @@ const OFFERINGS: Item[] = [
     t: "محتواكم ينشر نفسه",
     d: "توليد ونشر ومتابعة الحملات عبر قنواتكم، بمراجعة بشرية قبل النشر.",
     tag: "أتمتة",
+    // فقاعة حديث: ذيلها وأسطر نصّها تبدأ من اليسار — تُعكس للعربية
     icon: "M4 4h16v12H5.2L4 17.5V4Zm4 4h8M8 11h5",
+    flip: true,
   },
   {
     t: "أنظمتكم في مسار واحد",
@@ -48,7 +55,9 @@ const OFFERINGS: Item[] = [
     t: "رقم واحد تثقون به",
     d: "لوحة تحكّم تتحدّث نفسها لحظياً — لا تجميع يدوي ولا نسخ متضاربة.",
     tag: "تكامل",
+    // لوحة تحكّم: أسطر المحتوى تبدأ من اليسار — تُعكس للعربية
     icon: "M3 5h18v14H3zM3 9h18M7 13h5M7 16h8",
+    flip: true,
   },
 ];
 
@@ -59,13 +68,9 @@ export default function Work() {
 
   return (
     <section id="work" className="rv mx-auto max-w-[1120px] px-6 py-24">
-      <div className="mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]">
-        ما نقدّمه
-      </div>
-      <h2 className="text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
-        نتولّى ما يستهلك وقتكم
-      </h2>
-      <p className="mx-auto mt-2.5 max-w-[54ch] text-center text-[var(--dim)]">
+      <div className={eyebrow}>ما نقدّمه</div>
+      <h2 className={h2}>نتولّى ما يستهلك وقتكم</h2>
+      <p className={`${lede} max-w-[54ch]`}>
         لا نبيع أدوات. نأخذ العمل المتكرّر من على كاهل فريقكم.
       </p>
 
@@ -86,7 +91,7 @@ export default function Work() {
         ))}
       </div>
 
-      <div className="mt-7 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+      <div className="stagger mt-7 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((w) => (
           <article
             key={w.t}
@@ -104,6 +109,7 @@ export default function Work() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden
+                  className={w.flip ? "icon-flip" : undefined}
                 >
                   <path d={w.icon} />
                 </svg>

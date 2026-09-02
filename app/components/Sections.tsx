@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { eyebrow, h2, lede } from "./styles";
 
 // أيقونات خطّية بسيطة — inline SVG بلا مكتبة
 const ICONS = {
@@ -6,6 +7,10 @@ const ICONS = {
   flow: "M4 6h6M14 6h6M4 18h6M14 18h6M7 6v12M17 6v12M10 12h4",
   system: "M3 5h18v14H3zM3 9h18M7 13h5M7 16h8",
 } as const;
+
+// الأيقونات التي لها اتجاه قراءة: أسطر المحتوى في "system" تبدأ من اليسار،
+// فتُعكس في العربية. أيقونتا agent وflow متماثلتان — عكسهما بلا معنى.
+const DIRECTIONAL = new Set<keyof typeof ICONS>(["system"]);
 
 const SERVICES = [
   { k: "agent" as const, t: "وكلاء ذكاء اصطناعي", d: "وكلاء يتولّون خدمة العملاء والمبيعات والدعم داخل قنواتكم الحالية." },
@@ -40,8 +45,7 @@ const STEPS = [
   },
 ];
 
-const label = "mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]";
-const h2 = "text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight";
+const label = eyebrow;
 
 export function Problem() {
   return (
@@ -61,7 +65,7 @@ export function Services() {
     <section id="services" className="rv mx-auto max-w-[1120px] px-6 py-24">
       <div className={label}>الخدمات</div>
       <h2 className={h2}>ثلاثة أشياء نُتقنها</h2>
-      <div className="mt-9 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+      <div className="stagger mt-9 grid items-stretch gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s) => (
           <div
             key={s.k}
@@ -79,6 +83,7 @@ export function Services() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 aria-hidden
+                className={DIRECTIONAL.has(s.k) ? "icon-flip" : undefined}
               >
                 <path d={ICONS[s.k]} />
               </svg>
@@ -97,15 +102,18 @@ export function How() {
     <section id="how" className="rv mx-auto max-w-[1120px] px-6 py-24">
       <div className={label}>كيف نعمل</div>
       <h2 className={h2}>من التشخيص إلى التشغيل</h2>
-      <p className="mx-auto mt-2.5 max-w-[52ch] text-center text-[var(--dim)]">
+      <p className={`${lede} max-w-[52ch]`}>
         أربع خطوات واضحة. لا مفاجآت ولا مراحل مخفيّة.
       </p>
       {/* مرجع التخطيط: Samara على Mobbin — عمود متعرّج بعمود فقري.
           المسافات مضغوطة عمداً: بند ~200px بدل شاشة كاملة لكل خطوة. */}
       <div className="relative mt-12">
-        {/* العمود الفقري — يختفي على الجوال */}
+        {/* العمود الفقري — يختفي على الجوال.
+            ponytail: التوسيط ليس اتجاهياً. start-1/2 كان يعني right:50% في
+            العربية فينزاح العنصر بمقدار عرضه؛ left-1/2 مع -translate-x-1/2
+            يعطي المركز ذاته في الاتجاهين. */}
         <div
-          className="absolute inset-y-0 start-1/2 hidden w-px -translate-x-1/2 bg-[var(--line)] md:block"
+          className="absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-[var(--line)] md:block"
           aria-hidden
         />
 
@@ -117,9 +125,9 @@ export function How() {
                 key={s.k}
                 className="relative grid items-center gap-5 md:grid-cols-2 md:gap-12"
               >
-                {/* نقطة على العمود */}
+                {/* نقطة على العمود — 12px، فكان انزياحها عن العمود مرئياً */}
                 <span
-                  className="absolute start-1/2 top-1/2 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--color-bg)] bg-[var(--color-blue)] md:block"
+                  className="absolute left-1/2 top-1/2 hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--color-bg)] bg-[var(--color-blue)] md:block"
                   aria-hidden
                 />
 

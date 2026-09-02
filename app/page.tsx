@@ -1,6 +1,5 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import Logos from "./components/Logos";
 import Work from "./components/Work";
 import Testimonials from "./components/Testimonials";
 import Faq from "./components/Faq";
@@ -13,7 +12,6 @@ export default function Home() {
     <>
       <Nav />
       <Hero />
-      <Logos />
       <Problem />
       <Services />
       <How />

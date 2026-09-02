@@ -11,11 +11,9 @@ export default function Hero() {
       </div>
 
       <div className="hero-in relative z-10 mx-auto w-full max-w-[900px] px-6 pb-16 pt-28 text-center">
-        <h1 className="text-[clamp(30px,5.4vw,56px)] font-extrabold leading-[1.26] tracking-tight">
+        <h1 className="text-[clamp(30px,5.4vw,56px)] font-extrabold leading-[1.26]">
           وكلاء يردّون.{" "}
-          <span className="bg-[linear-gradient(94deg,#1C6FA8_0%,#B98A0C_100%)] bg-clip-text text-transparent">
-            وأتمتة تُنفّذ.
-          </span>
+          <span className="grad-accent">وأتمتة تُنفّذ.</span>
           <br />
           كلاهما داخل أنظمتكم.
         </h1>

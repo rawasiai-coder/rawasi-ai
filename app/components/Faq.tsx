@@ -1,3 +1,5 @@
+import { eyebrow, h2 } from "./styles";
+
 // مرجع التخطيط: Mixpanel على Mobbin — صفوف داكنة مستديرة بمؤشر +/−
 // ponytail: <details> أصلي — المتصفح يتولّى الفتح والإغلاق وإتاحة الوصول بلا JS
 const FAQS = [
@@ -26,12 +28,8 @@ const FAQS = [
 export default function Faq() {
   return (
     <section id="faq" className="rv mx-auto max-w-[860px] px-6 py-24">
-      <div className="mb-3.5 text-center text-xs tracking-[.18em] text-[var(--dim)]">
-        الأسئلة الشائعة
-      </div>
-      <h2 className="text-center text-[clamp(26px,4vw,40px)] font-extrabold leading-tight tracking-tight">
-        أسئلة نسمعها كثيراً
-      </h2>
+      <div className={eyebrow}>الأسئلة الشائعة</div>
+      <h2 className={h2}>أسئلة نسمعها كثيراً</h2>
 
       <div className="mt-9 space-y-3">
         {FAQS.map((f) => (
