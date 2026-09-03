@@ -27,7 +27,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       <Testimonials d={d.testimonials} />
       <Faq d={d.faq} />
       <Booking d={d.booking} />
-      <Footer d={d.footer} />
+      <Footer d={d} locale={locale} />
       <Reveal />
     </>
   );

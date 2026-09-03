@@ -4,6 +4,16 @@ import { useEffect, useState } from "react";
 import { OTHER, SWITCH_LABEL, type Locale } from "../i18n/config";
 import type { Dict } from "../i18n/types";
 
+/**
+ * شريط عائم على هيئة بطاقة مستديرة — مرجع التصميم: Oryx.
+ *
+ * ponytail: الهندسة ثابتة (ارتفاع 58 وحافة 18 وحدّ 1px) والمتغيّر هو الخلفية
+ * والحدّ والظل فقط، فلا إزاحة عند التمرير. البطاقة غير اتجاهية: justify-between
+ * وحده يضع العلامة في بداية القراءة والأزرار في نهايتها، عربيةً كانت أم إنجليزية.
+ */
+
+const EASE = "ease-[cubic-bezier(.16,1,.3,1)]";
+
 export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
   const [open, setOpen] = useState(false);
   const [past, setPast] = useState(false);
@@ -26,41 +36,49 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
   }, [open]);
 
   /**
-   * الشريط شفّاف فوق الهيرو وأبيض بعده.
-   * ponytail: مراقب تقاطع على الهيرو نفسه لا مستمع scroll — لا عمل في كل إطار،
-   * والحدّ يتبع ارتفاع الهيرو الفعلي بدل رقم مكتوب يدوياً. rootMargin يساوي
-   * ارتفاع الشريط حتى يتبدّل اللون عند ملامسة حافة الهيرو للشريط لا قبلها.
+   * البطاقة مندمجة مع الهيرو في الأعلى، وتنفصل كشريط أبيض بمجرّد بدء التمرير.
+   *
+   * ponytail: الحدّ 24px لا ارتفاع الهيرو — السلوك المقصود أن ينفصل الشريط عند
+   * أول حركة لا بعد قسم كامل. مستمع سلبي مجمَّع في إطار واحد: لا قياس تخطيطي
+   * ولا عمل في كل إطار، ومقارنة رقم واحد فقط.
    */
   useEffect(() => {
-    const io = new IntersectionObserver(
-      ([entry]) => setPast(!entry.isIntersecting),
-      { rootMargin: "-72px 0px 0px 0px" }
-    );
-    // الشريط يفترض وجود هيرو أعلى الصفحة — وهو الحال في كل مسارات الموقع.
-    // بلا هيرو لا يُنشأ المراقب ويبقى الشريط شفّافاً، فلا حالة تُضبط أثناء التأثير.
-    const hero = document.querySelector("header");
-    if (hero) io.observe(hero);
-    return () => io.disconnect();
+    let frame = 0;
+    const apply = () => {
+      frame = 0;
+      setPast(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // الحالة الأولى — الصفحة قد تُفتح على موضع محفوظ
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
-  // القائمة المفتوحة تفرض الخلفية البيضاء — لوحة شفّافة فوق الهيرو لا تُقرأ.
+  // القائمة المفتوحة تفرض الخلفية — بطاقة شفّافة فوق الهيرو لا تُقرأ.
   const opaque = past || open;
 
   return (
-    // ponytail: الحدّ موجود دائماً ويتغيّر لونه فقط — لو ظهر عند التمرير لأزاح
-    // المحتوى بمقدار بكسل. الاتجاه لا يدخل هنا: الخلفية والحدّ غير اتجاهيين.
-    <nav
-      className={`site-nav fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
-        opaque
-          ? "border-[var(--line)] bg-[rgba(255,255,255,.88)] shadow-[0_1px_3px_rgba(20,22,26,.06)] backdrop-blur-[14px]"
-          : "border-transparent bg-transparent"
-      }`}
-    >
-      {/* ponytail: لا dir مكتوب هنا. الشريط يتبع اتجاه الصفحة — العلامة تبدأ من
-          جهة القراءة والزر ينتهي إلى الطرف المقابل، وهو ما تفعله ms-auto. */}
-      <div className="flex w-full items-center gap-4 px-6 py-3 md:px-8">
+    <nav className="site-nav fixed inset-x-0 top-0 z-50">
+      <div
+        className={`mx-auto mt-3 flex h-[58px] max-w-[1100px] items-center justify-between gap-3 rounded-[18px] border px-[18px] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-[400ms] ${EASE} ${
+          opaque
+            ? "nav-card border-[rgba(20,22,26,.07)] bg-[rgba(255,255,255,.8)] backdrop-blur-[20px] backdrop-saturate-[1.6]"
+            : "border-transparent bg-transparent"
+        }`}
+      >
         {/* العلامة — قفل لاتيني مغلق الاتجاه في اللغتين */}
-        <a href={`/${locale}`} dir="ltr" className="flex shrink-0 items-center gap-2.5">
+        <a
+          href={`/${locale}`}
+          dir="ltr"
+          className="flex shrink-0 items-center gap-2.5"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[26px]" />
           <span className="en text-[19px] font-extrabold tracking-tight">
@@ -68,47 +86,50 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
           </span>
         </a>
 
-        {/* الروابط — التوسيط ليس اتجاهياً: left-1/2 مع -translate-x-1/2
-            يعطي المركز نفسه في الاتجاهين، والترتيب يتبع اتجاه الصفحة. */}
-        <div className="absolute left-1/2 hidden -translate-x-1/2 gap-7 md:flex">
+        {/* الروابط — عنصر أوسط في space-between كما في المرجع */}
+        <div className="hidden items-center gap-[26px] md:flex">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[var(--dim)] transition-colors hover:text-[var(--color-ink)]"
+              className="text-[13.5px] font-medium text-[var(--dim)] transition-colors duration-[250ms] hover:text-[var(--color-ink)]"
             >
               {l.label}
             </a>
           ))}
         </div>
 
-        {/* ms-auto يدفع المجموعة إلى الطرف المقابل للعلامة في الاتجاهين */}
-        <div className="ms-auto flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-[10px]">
+          {/* مبدّل اللغة — زر خفيف، يقابل زر Sign in الثانوي في المرجع */}
           <a
             href={`/${other}`}
             hrefLang={other}
             aria-label={d.switchLanguage}
-            className="en hidden rounded-lg border border-[var(--line)] px-3 py-2 text-[13px] font-bold text-[var(--dim)] transition-colors hover:border-black/30 hover:text-[var(--color-ink)] md:block"
+            className={`en hidden h-[42px] items-center rounded-full border border-[rgba(20,22,26,.07)] px-[22px] text-[14px] font-semibold text-[var(--color-ink)] transition-[border-color,transform] duration-300 ${EASE} hover:border-[var(--color-ink)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[.97] md:inline-flex`}
           >
             {SWITCH_LABEL[other]}
           </a>
 
+          {/* الإجراء الأساسي — حبّة ممتلئة بلون العلامة */}
           <a
             href="#booking"
-            className="hidden rounded-lg bg-[var(--color-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-[transform,background] duration-200 hover:bg-[#2A2E36] active:scale-[.97] md:block"
+            className={`hidden h-[42px] items-center rounded-full bg-[var(--color-ink)] px-[22px] text-[14px] font-semibold text-white transition-[background,transform] duration-300 ${EASE} hover:-translate-y-0.5 hover:bg-[#2A2E36] active:translate-y-0 active:scale-[.97] md:inline-flex`}
           >
             {d.cta}
           </a>
 
-          {/* زرّ القائمة — جوال فقط */}
+          {/* زرّ القائمة — دائرة محدّدة 42px كما في المرجع */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? d.closeMenu : d.openMenu}
-            className="grid h-10 w-10 shrink-0 place-items-center gap-[5px] rounded-lg transition-colors hover:bg-black/5 md:hidden"
+            className="flex h-[42px] w-[42px] shrink-0 flex-col items-center justify-center gap-[5px] rounded-full border border-[rgba(20,22,26,.12)] transition-colors hover:border-[var(--color-ink)] active:scale-[.97] md:hidden"
           >
+            {/* ponytail: flex-col لا grid — شبكة بارتفاع ثابت تمدّد الصفوف إلى
+                10px فيصير مركزاها 15px متباعدين ولا يتقاطع الخطّان. هنا
+                التباعد 6.5px فعلياً، فالإزاحة ±6.5 تجمعهما في نقطة واحدة. */}
             <span
               className={`block h-[1.5px] w-[18px] bg-[var(--color-ink)] transition-transform duration-200 ${
                 open ? "translate-y-[6.5px] rotate-45" : ""
@@ -128,20 +149,20 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
         </div>
       </div>
 
-      {/* اللوحة — تنسدل رأسياً فتبقى صحيحة في الاتجاهين؛ المحاذاة منطقية */}
+      {/* لوحة الجوال — بطاقة مستقلة تحت الشريط، لا امتداد له، فيبقى ارتفاعه ثابتاً */}
       <div
         id="mobile-nav"
-        className={`overflow-hidden transition-[max-height,opacity] duration-300 md:hidden ${
-          open ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
+        className={`nav-card absolute inset-x-[18px] top-[74px] overflow-hidden rounded-[18px] border border-[rgba(20,22,26,.07)] bg-[rgba(255,255,255,.92)] backdrop-blur-[20px] transition-[max-height,opacity] duration-300 md:hidden ${
+          open ? "max-h-[480px] opacity-100" : "pointer-events-none max-h-0 opacity-0"
         }`}
       >
-        <div className="flex flex-col gap-1 border-t border-[var(--line)] px-6 pb-4 pt-3">
+        <div className="flex flex-col gap-1 px-[18px] py-[14px]">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="rounded-lg px-2 py-2.5 text-start text-[15px] text-[var(--dim)] transition-colors hover:bg-black/5 hover:text-[var(--color-ink)]"
+              className="rounded-lg px-1 py-2.5 text-start text-[15px] text-[var(--dim)] transition-colors hover:bg-black/5 hover:text-[var(--color-ink)]"
             >
               {l.label}
             </a>
@@ -151,7 +172,7 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
             href={`/${other}`}
             hrefLang={other}
             aria-label={d.switchLanguage}
-            className="rounded-lg px-2 py-2.5 text-start text-[15px] text-[var(--dim)] transition-colors hover:bg-black/5 hover:text-[var(--color-ink)]"
+            className="rounded-lg px-1 py-2.5 text-start text-[15px] text-[var(--dim)] transition-colors hover:bg-black/5 hover:text-[var(--color-ink)]"
           >
             <span className="en">{SWITCH_LABEL[other]}</span>
           </a>
@@ -159,7 +180,7 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
           <a
             href="#booking"
             onClick={() => setOpen(false)}
-            className="mt-2 rounded-lg bg-[var(--color-ink)] px-5 py-3 text-center text-[14px] font-bold text-white"
+            className="mt-2 rounded-full bg-[var(--color-ink)] px-[22px] py-3 text-center text-[14px] font-semibold text-white"
           >
             {d.cta}
           </a>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { eyebrow, h2, lede } from "./styles";
+import type { Locale } from "../i18n/config";
 import type { Dict, ServiceKey } from "../i18n/types";
 
 // أيقونات خطّية بسيطة — inline SVG بلا مكتبة. عرض لا نصّ، فتبقى خارج القاموس.
@@ -133,12 +134,92 @@ export function How({ d }: { d: Dict["how"] }) {
   );
 }
 
-export function Footer({ d }: { d: Dict["footer"] }) {
+/** رابط تذييل — حالة تحويم وتركيز واضحتان، ومحاذاة منطقية تتبع الاتجاه. */
+function FootLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <footer className="border-t border-[var(--line)] py-11 text-[13.5px] text-[var(--dim)]">
-      <div className="mx-auto flex max-w-[1120px] flex-wrap justify-between gap-4 px-6">
-        <div>{d.name}</div>
-        <div className="en">© 2026</div>
+    <a
+      href={href}
+      className="rounded text-start text-[13.5px] text-[var(--dim)] transition-colors duration-200 hover:text-[var(--color-ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
+    >
+      {children}
+    </a>
+  );
+}
+
+const footHeading =
+  "mb-4 text-[13px] font-bold text-[var(--color-ink)]";
+
+/**
+ * التذييل — لغة تصميم المرجع: حدّ علوي رفيع، إيقاع 36px، مقاس 13px، لون خافت،
+ * وصفّ سفلي واحد يلتفّ عند الضيق. المحتوى وحده أغنى: كتلة علامة + عمودا روابط.
+ *
+ * ponytail: التسميات تأتي من أقسامها (nav وservices) لا من قاموس التذييل —
+ * ترجمة واحدة لكل مصطلح فلا ينحرف "الخدمات" هنا عن "الخدمات" في الشريط.
+ */
+export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
+  const f = d.footer;
+
+  const quickLinks = [
+    { href: "#services", label: d.nav.services },
+    { href: "#how", label: d.nav.how },
+    { href: "#work", label: d.nav.work },
+    { href: "#faq", label: d.nav.faq },
+  ];
+
+  return (
+    <footer className="border-t border-[var(--line)] bg-[var(--color-bg)]">
+      <div className="mx-auto max-w-[1100px] px-6 py-[52px]">
+        {/* الكتلة العليا — العلامة أعرض من عمودي الروابط */}
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">
+          <div className="max-w-[42ch]">
+            <a
+              href={`/${locale}`}
+              dir="ltr"
+              className="inline-flex items-center gap-2.5"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[22px]" />
+              <span className="en text-[16px] font-extrabold tracking-tight">
+                rawasi<span className="text-[var(--color-blue)]">ai</span>
+              </span>
+            </a>
+
+            <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--dim)]">
+              {f.tagline}
+            </p>
+          </div>
+
+          <nav aria-label={f.navTitle}>
+            <h2 className={footHeading}>{f.navTitle}</h2>
+            <ul className="flex flex-col gap-2.5">
+              {quickLinks.map((l) => (
+                <li key={l.href} className="flex">
+                  <FootLink href={l.href}>{l.label}</FootLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label={f.servicesTitle}>
+            <h2 className={footHeading}>{f.servicesTitle}</h2>
+            <ul className="flex flex-col gap-2.5">
+              {SERVICE_ORDER.map((k) => (
+                <li key={k} className="flex">
+                  <FootLink href="#services">{d.services.items[k].t}</FootLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        {/* الصفّ السفلي — نمط .foot في المرجع: يلتفّ بدل أن يتزاحم.
+            ponytail: بلا مبدّل لغة هنا — الشريط العلوي يحمله، وتكراره في
+            التذييل هدفان لفعل واحد. */}
+        <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-[var(--line)] pt-6 text-[13px] text-[var(--dim)]">
+          <div>
+            <span className="en">© 2026</span> {f.brand}. {f.rights}
+          </div>
+        </div>
       </div>
     </footer>
   );
