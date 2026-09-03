@@ -53,6 +53,11 @@ body{
 [dir="rtl"] .quote::before{ content:"\00AB"; }
 [dir="rtl"] .quote::after{ content:"\00BB"; }
 
+/* ظلّ البطاقة العائمة في الشريط.
+   ponytail: هنا لا في أداة Tailwind — الانتشار السالب (-28px) لا يُحلَّل داخل
+   shadow-[...] فينتج ظلّاً شفّافاً. القيمة مطابقة لمرجع التصميم. */
+.nav-card{ box-shadow:0 16px 40px -28px rgba(20,22,26,.5); }
+
 /* الأيقونات الاتجاهية: أسهم الاتجاه، فقاعات الحديث، أسطر المحتوى.
    تُعكس أفقياً في RTL فقط — الأيقونات المتماثلة لا تأخذ هذا الصنف. */
 [dir="rtl"] .icon-flip{ transform:scaleX(-1); }
@@ -62,6 +67,10 @@ body{
    تنكسر في منتصفها — العبارة الإنجليزية أطول من العربية فتحتاج ذلك. */
 .grad-accent{
   display:inline-block;
+  /* ponytail: background-clip:text يرسم داخل صندوق العنصر وحده، والتشكيل
+     العربي يعلو فوقه عند leading ضيّق فيُقصّ. الحشو يوسّع صندوق الرسم
+     والهامش السالب يلغي أثره في التخطيط. */
+  padding-block:.22em; margin-block:-.22em;
   background-image:linear-gradient(94deg,#1C6FA8 0%,#B98A0C 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
@@ -265,5 +274,7 @@ body{
   .wave, .mesh{ animation:none !important; }
   .rv{ transition:opacity 200ms ease; transform:none; }
   html{ scroll-behavior:auto; }
-  .site-nav{ transition:none !important; }
+  /* ponytail: الانتقال صار على البطاقة الداخلية لا على <nav> نفسه،
+     فالمحدّد يشمل الأبناء وإلا بقيت الحركة رغم تفضيل تقليلها. */
+  .site-nav, .site-nav *{ transition:none !important; }
 }

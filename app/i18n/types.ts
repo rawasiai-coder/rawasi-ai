@@ -89,5 +89,16 @@ export interface Dict {
     note: string;
   };
 
-  footer: { name: string };
+  /**
+   * التذييل يعيد استخدام تسميات التنقّل والخدمات من أقسامها، فلا تُترجم مرتين
+   * ولا تنحرف إحداهما عن الأخرى. هنا نصّه الخاص وحده.
+   */
+  footer: {
+    /** اسم العلامة وحده — لسطر حقوق النشر */
+    brand: string;
+    tagline: string;
+    navTitle: string;
+    servicesTitle: string;
+    rights: string;
+  };
 }

@@ -201,7 +201,14 @@ const en: Dict = {
     note: "Calendly collects the name, email and your custom questions, and sends confirmations and reminders automatically.",
   },
 
-  footer: { name: "Rawasi — AI agency" },
+  footer: {
+    brand: "Rawasi",
+    tagline:
+      "A Saudi AI agency. We build agents and automation that run inside your operations — not slide decks.",
+    navTitle: "Quick links",
+    servicesTitle: "Services",
+    rights: "All rights reserved.",
+  },
 };
 
 export default en;
