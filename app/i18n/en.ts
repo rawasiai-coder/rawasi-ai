@@ -20,10 +20,13 @@ const en: Dict = {
     how: "How we work",
     work: "What we do",
     faq: "FAQ",
-    cta: "Book a call",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     switchLanguage: "Switch to Arabic",
+    whatsapp: "WhatsApp",
+    whatsappAria: "Message us on WhatsApp",
+    email: "Email",
+    emailAria: "Email us",
   },
 
   hero: {

@@ -23,11 +23,15 @@ export interface Dict {
     how: string;
     work: string;
     faq: string;
-    cta: string;
     openMenu: string;
     closeMenu: string;
     /** نصّ بديل لزرّ تبديل اللغة */
     switchLanguage: string;
+    /** تسميات التواصل — المختصرة للوحة الجوال، وaria للأزرار الأيقونية */
+    whatsapp: string;
+    whatsappAria: string;
+    email: string;
+    emailAria: string;
   };
 
   hero: {
