@@ -9,7 +9,7 @@ export default function Hero({
   demo: Dict["demo"];
 }) {
   return (
-    <header className="relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
+    <header className="hero-fade relative flex min-h-[92vh] items-center overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
       {/* خلفية هادئة عمداً — العرض الحيّ هو ما يجب أن يتحرّك، لا الخلفية */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div className="mesh mesh-warm" />
