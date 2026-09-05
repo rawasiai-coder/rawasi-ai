@@ -17,3 +17,6 @@ export const OTHER: Record<Locale, Locale> = { ar: "en", en: "ar" };
 
 /** ما يظهر على زرّ التبديل: اسم اللغة الأخرى بلغتها هي. */
 export const SWITCH_LABEL: Record<Locale, string> = { ar: "العربية", en: "EN" };
+
+/** وسم اللغة كما يتوقّعه Open Graph — لغة_منطقة لا رمز اللغة وحده. */
+export const OG_LOCALE: Record<Locale, string> = { ar: "ar_SA", en: "en_US" };

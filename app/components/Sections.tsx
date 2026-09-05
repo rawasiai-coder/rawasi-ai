@@ -109,7 +109,9 @@ export function How({ d }: { d: Dict["how"] }) {
                   <div className="en mb-2 text-[13px] font-bold tracking-[.16em] text-[var(--color-blue)]">
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <h4 className="mb-2 text-[clamp(19px,2.2vw,24px)] font-bold">{s.t}</h4>
+                  {/* ponytail: h3 لا h4 — الرتبة تلي h2 الخاص بالقسم بلا قفز.
+                      الأنماط بالأصناف لا بالوسم، فالمظهر لا يتغيّر. */}
+                  <h3 className="mb-2 text-[clamp(19px,2.2vw,24px)] font-bold">{s.t}</h3>
                   <p className="max-w-[42ch] text-[15px] text-[var(--dim)]">{s.d}</p>
                 </div>
 
