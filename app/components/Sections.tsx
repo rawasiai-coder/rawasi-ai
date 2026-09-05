@@ -175,6 +175,9 @@ export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
             <a
               href={`/${locale}`}
               dir="ltr"
+              // ponytail: الاسم المعروض ناتج text-transform لا نصّ — بلا هذا
+              // يقرأ القارئ الصوتي «rawasiai» ملتصقاً.
+              aria-label="Rawasi AI"
               className="inline-flex items-center gap-2.5"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

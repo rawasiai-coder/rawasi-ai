@@ -141,13 +141,6 @@ body{
   70%    { transform:scale(1.05) translate3d(-2%,1.5%,0); filter:blur(44px) saturate(125%) hue-rotate(-5deg); }
 }
 
-/* الشارة أعلى الهيرو — نقطة نابضة تدل على أن الموقع "حيّ" */
-@keyframes dotPulse{
-  0%,100%{ transform:scale(1);   opacity:1;   }
-  50%    { transform:scale(1.5); opacity:.55; }
-}
-.live-dot{ animation:dotPulse 2.2s ease-in-out infinite; }
-
 /* ---------- لوحة العرض الحيّة ---------- */
 @keyframes msgIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
 .msg-in{ animation:msgIn 300ms var(--ease-out) backwards; }
@@ -159,53 +152,6 @@ body{
 }
 .dot:nth-child(2){ animation-delay:.15s; }
 .dot:nth-child(3){ animation-delay:.3s; }
-
-.wave{ position:absolute; inset:-30%; will-change:transform; }
-
-/* تدفّق قطري: أصفر من أعلى اليمين ← أزرق في أسفل اليسار.
-   ponytail: طبقة خطية واحدة تضمن التدرّج المتصل — الدوائر وحدها تعطي بقعاً. */
-/* ponytail: الأصفر والأزرق متكاملان — أي مزج مباشر يمرّ بالأخضر.
-   الحل تمرير الانتقال عبر داكن محايد لا عبر لون وسيط. */
-.wave-a{
-  background:linear-gradient(118deg,
-    var(--color-amber) 0%,
-    var(--color-orange) 18%,
-    #6B5A22 38%,          /* داكن دافئ */
-    #14161A 52%,          /* محايد — يكسر مسار الأخضر */
-    #14364A 66%,          /* داكن بارد */
-    var(--color-blue) 100%);
-  filter:blur(44px) saturate(140%);
-  animation:waveA 19s ease-in-out infinite;
-}
-.wave-b{
-  background:
-    radial-gradient(40% 46% at 4% 6%, var(--color-amber) 0%, transparent 54%),
-    radial-gradient(42% 48% at 98% 96%, var(--color-blue) 0%, transparent 56%);
-  filter:blur(58px) saturate(150%);
-  opacity:.8;
-  animation:waveB 25s ease-in-out infinite;
-}
-.wave-c{
-  background:radial-gradient(34% 36% at 92% 84%, var(--color-sky) 0%, transparent 52%);
-  filter:blur(64px) saturate(140%);
-  opacity:.42;
-  animation:waveC 31s ease-in-out infinite;
-}
-
-@keyframes waveA{
-  0%,100%{ transform:translate3d(0,0,0)      scale(1);    }
-  33%    { transform:translate3d(-4%,3%,0)   scale(1.10); }
-  66%    { transform:translate3d(3%,-2%,0)   scale(1.04); }
-}
-@keyframes waveB{
-  0%,100%{ transform:translate3d(0,0,0)      scale(1.04); }
-  40%    { transform:translate3d(5%,-4%,0)   scale(1.13); }
-  75%    { transform:translate3d(-3%,2%,0)   scale(1.02); }
-}
-@keyframes waveC{
-  0%,100%{ transform:translate3d(0,0,0)      scale(1.06); }
-  50%    { transform:translate3d(-5%,-3%,0)  scale(1.16); }
-}
 
 /* الأزرار */
 .btn{
@@ -223,15 +169,6 @@ body{
   border:1.5px solid rgba(20,22,26,.28);
 }
 .btn-outline:hover{ background:rgba(20,22,26,.06); border-color:rgba(20,22,26,.5); }
-
-/* أزرار داخل الهيرو الداكن — تنقلب */
-.on-dark .btn-primary{ background:#fff; color:var(--color-ink); }
-.on-dark .btn-primary:hover{ background:#F0EFF3; }
-.on-dark .btn-outline{
-  background:rgba(255,255,255,.10); color:#fff;
-  border-color:rgba(255,255,255,.72); backdrop-filter:blur(6px);
-}
-.on-dark .btn-outline:hover{ background:rgba(255,255,255,.2); border-color:#fff; }
 
 /* كشف عند الظهور.
    ponytail: الإخفاء يُفعّله JS عبر .js-rv على <html> — بلا JS يبقى كل شيء ظاهراً
@@ -263,10 +200,6 @@ body{
 .hero-in > *:nth-child(4){ animation-delay:240ms; }
 .hero-in > *:nth-child(5){ animation-delay:300ms; }
 
-/* الصورة تنزلق من الأسفل */
-@keyframes portraitIn{ from{ opacity:0; transform:translateY(28px) scale(.985); } to{ opacity:1; transform:none; } }
-.portrait-in{ animation:portraitIn 760ms var(--ease-out) 140ms backwards; }
-
 /* نبض خفيف على الزر الأساسي — يلفت دون إزعاج */
 @keyframes softPulse{
   0%,100%{ box-shadow:0 0 0 0 rgba(20,22,26,.22); }
@@ -282,15 +215,11 @@ body{
 }
 
 @media (prefers-reduced-motion: reduce){
-  .hero-in > *, .portrait-in{ animation:none !important; opacity:1 !important; transform:none !important; }
-  .btn-primary, .live-dot{ animation:none !important; }
-  .btn-primary::after{ display:none; }
+  .hero-in > *{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .btn-primary{ animation:none !important; }
   .msg-in{ animation:none !important; }
   .dot{ animation:none !important; opacity:.5; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .wave, .mesh{ animation:none !important; }
+  .mesh{ animation:none !important; }
   .rv{ transition:opacity 200ms ease; transform:none; }
   html{ scroll-behavior:auto; }
   /* ponytail: الانتقال صار على البطاقة الداخلية لا على <nav> نفسه،

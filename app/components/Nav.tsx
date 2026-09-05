@@ -143,6 +143,9 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
             <a
               href={`/${locale}`}
               dir="ltr"
+              // ponytail: بلا هذا يقرأ القارئ الصوتي نصّ العنصر «rawasiai»
+              // ملتصقاً وبحروف صغيرة — الاسم المعروض ناتج text-transform لا نصّ.
+              aria-label="Rawasi AI"
               className="flex shrink-0 items-center gap-3 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
