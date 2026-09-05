@@ -169,7 +169,9 @@ export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
   ];
 
   return (
-    <footer className="border-t border-[var(--line)] bg-[var(--color-bg)]">
+    // ponytail: بلا border-t — هو الخطّ الأفقي نفسه الذي يفصل التذييل عمّا
+    // فوقه. الانتقال صار لونياً بالكامل عبر .footer-aurora.
+    <footer className="footer-aurora">
       <div className="mx-auto max-w-[1100px] px-6 py-[52px]">
         {/* الكتلة العليا — العلامة أعرض من عمودي الروابط */}
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">

@@ -36,7 +36,9 @@ export default function Booking({ d }: { d: Dict["booking"] }) {
   }, []);
 
   return (
-    <section id="booking" className="border-y border-[var(--line)] bg-[#EFEEF3]">
+    // ponytail: border-t لا border-y — الحدّ السفلي كان يقع تماماً عند بداية
+    // التذييل فيرسم الخطّ الذي يُراد إذابته. الحدّ العلوي يبقى كما هو.
+    <section id="booking" className="border-t border-[var(--line)] bg-[#EFEEF3]">
       <div className="rv mx-auto max-w-[1120px] px-6 py-24">
         <div className={eyebrow}>{d.eyebrow}</div>
         <h2 className={h2}>{d.title}</h2>
