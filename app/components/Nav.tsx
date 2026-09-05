@@ -143,12 +143,13 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
             <a
               href={`/${locale}`}
               dir="ltr"
-              className="flex shrink-0 items-center gap-2.5 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
+              className="flex shrink-0 items-center gap-3 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[26px]" />
-              <span className="en text-[19px] font-extrabold tracking-tight">
-                rawasi<span className="text-[var(--color-blue)]">ai</span>
+              <span className="en wordmark text-[16px]">
+                rawasi
+                <span className="wordmark-ai text-[var(--color-blue)]">ai</span>
               </span>
             </a>
           </div>

@@ -179,8 +179,10 @@ export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[22px]" />
-              <span className="en text-[16px] font-extrabold tracking-tight">
-                rawasi<span className="text-[var(--color-blue)]">ai</span>
+              {/* المعالجة نفسها التي في الشريط، بمقاس يناسب علامة ٢٢px */}
+              <span className="en wordmark text-[14px]">
+                rawasi
+                <span className="wordmark-ai text-[var(--color-blue)]">ai</span>
               </span>
             </a>
 
