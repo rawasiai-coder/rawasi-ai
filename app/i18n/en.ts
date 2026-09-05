@@ -9,10 +9,11 @@ import type { Dict } from "./types";
  * The testimonials are translations of real quotes, kept literal.
  */
 const en: Dict = {
+  // Search-engine copy only — never rendered on the page.
   meta: {
-    title: "Rawasi — AI agents and automation that run inside your operations",
+    title: "Rawasi AI | AI Solutions & Business Automation",
     description:
-      "A Saudi AI agency. We build agents and automation that run inside your operations — not slide decks.",
+      "A Saudi AI company building intelligent agents and automation that run inside your operations — across support, sales and operations. From diagnosis to production, with a working prototype in two weeks.",
   },
 
   nav: {

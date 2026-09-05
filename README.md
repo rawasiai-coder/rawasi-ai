@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rawasi AI — marketing site
 
-## Getting Started
+Single-page marketing site for Rawasi (رواسي), a Saudi AI automation agency.
+Arabic-first, with a full English locale.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, Turbopack)
+- React 19
+- Tailwind CSS v4 (via `@tailwindcss/postcss`)
+- TypeScript
+- Self-hosted Thmanyah Sans (`public/fonts`)
+
+No database and no backend. Booking is handled by an embedded Calendly widget.
+
+## Locales
+
+Two statically generated routes, both prerendered:
+
+| Route | `lang` | `dir` |
+| ----- | ------ | ----- |
+| `/ar` | `ar`   | `rtl` |
+| `/en` | `en`   | `ltr` |
+
+`proxy.ts` redirects a bare path to the visitor's `Accept-Language`, falling
+back to Arabic. Direction is derived from the URL segment in
+`app/[locale]/layout.tsx` — it is never hardcoded in a component.
+
+All copy lives in `app/i18n/ar.ts` and `app/i18n/en.ts` behind the shared
+`Dict` type in `app/i18n/types.ts`, so a missing key fails the build.
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # development server on :3000
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # eslint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Purpose |
+| -------- | -------- | ------- |
+| `NEXT_PUBLIC_CALENDLY_URL` | no | Calendly event URL for the booking section. Without it the section renders a placeholder instead of the calendar. |
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  [locale]/        layout (lang/dir, metadata) + page
+  components/      sections; styles.ts holds shared heading classes
+  i18n/            config, types, ar.ts, en.ts, dictionaries
+  globals.css      theme tokens, fonts, animations, RTL rules
+  site.ts          real contact details (WhatsApp, email)
+proxy.ts           locale redirect (Next 16 renamed middleware -> proxy)
+public/brand       logo mark   public/fonts   public/steps  process images
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes for contributors
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`globals.css` and several components contain deliberate-looking oddities that
+are load-bearing — negative margins that compensate for letter-spacing,
+`left-1/2` used instead of `start-1/2` because centring is not directional, and
+a reveal system with fallbacks because `IntersectionObserver` can miss its first
+callback. Read the `ponytail:` comments before removing anything that looks
+redundant.

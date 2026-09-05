@@ -19,14 +19,18 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <Nav d={d.nav} locale={locale} />
-      <Hero d={d.hero} demo={d.demo} />
-      <Problem d={d.problem} />
-      <Services d={d.services} />
-      <How d={d.how} />
-      <Work d={d.work} />
-      <Testimonials d={d.testimonials} />
-      <Faq d={d.faq} />
-      <Booking d={d.booking} />
+      {/* ponytail: <main> معلَم دلالي فقط — عنصر كتليّ بلا أنماط، فالتخطيط
+          كما هو. التنقّل والتذييل خارجه عمداً؛ محتوى الصفحة وحده بداخله. */}
+      <main>
+        <Hero d={d.hero} demo={d.demo} />
+        <Problem d={d.problem} />
+        <Services d={d.services} />
+        <How d={d.how} />
+        <Work d={d.work} />
+        <Testimonials d={d.testimonials} />
+        <Faq d={d.faq} />
+        <Booking d={d.booking} />
+      </main>
       <Footer d={d} locale={locale} />
       <Reveal />
     </>

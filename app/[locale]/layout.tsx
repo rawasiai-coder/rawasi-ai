@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "../globals.css";
-import { DIR, LOCALES, isLocale } from "../i18n/config";
+import {
+  DEFAULT_LOCALE,
+  DIR,
+  LOCALES,
+  OG_LOCALE,
+  OTHER,
+  isLocale,
+} from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
+import { EMAIL, PHONE_DISPLAY } from "../site";
 
 /**
  * التخطيط الجذر داخل مقطع اللغة — Next يسمح بذلك حين لا يوجد app/layout.tsx.
@@ -20,12 +28,34 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const { meta } = getDictionary(locale);
+
+  /* ponytail: بلا metadataBase تبقى هذه المسارات نسبية. النطاق الإنتاجي غير
+     معرّف في المشروع، وتخمينه يضع canonical خاطئاً في كل صفحة — فيُترك
+     لصاحب المشروع. بمجرّد ضبط metadataBase تصير كلّها مطلقة تلقائياً. */
   return {
     title: meta.title,
     description: meta.description,
     alternates: {
       canonical: `/${locale}`,
-      languages: { ar: "/ar", en: "/en" },
+      languages: {
+        ar: "/ar",
+        en: "/en",
+        "x-default": `/${DEFAULT_LOCALE}`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: "Rawasi AI",
+      title: meta.title,
+      description: meta.description,
+      url: `/${locale}`,
+      locale: OG_LOCALE[locale],
+      alternateLocale: OG_LOCALE[OTHER[locale]],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
     },
   };
 }
@@ -37,9 +67,34 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
+  const { meta } = getDictionary(locale);
+
+  /**
+   * بيانات منظّمة للشركة — الحقول المعروفة فعلاً من المشروع وحدها.
+   * ponytail: بلا url أو logo لأنّهما يحتاجان النطاق الإنتاجي، وبلا address
+   * أو sameAs أو founder لأنّ المشروع لا يحوي أياً منها. البريد والهاتف
+   * مأخوذان من app/site.ts، وهما بيانات الشركة الحقيقية.
+   */
+  const organizationLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Rawasi AI",
+    alternateName: "رواسي",
+    description: meta.description,
+    email: EMAIL,
+    telephone: PHONE_DISPLAY,
+  };
+
   return (
     <html lang={locale} dir={DIR[locale]}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <script
+          type="application/ld+json"
+          // ponytail: JSON.stringify لقيم من المشروع نفسه لا من إدخال مستخدم.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        />
+      </body>
     </html>
   );
 }
