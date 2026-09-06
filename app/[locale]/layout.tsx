@@ -10,7 +10,7 @@ import {
   isLocale,
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
-import { EMAIL, PHONE_DISPLAY } from "../site";
+import { EMAIL, PHONE_DISPLAY, SITE_URL } from "../site";
 
 /**
  * التخطيط الجذر داخل مقطع اللغة — Next يسمح بذلك حين لا يوجد app/layout.tsx.
@@ -29,10 +29,10 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const { meta } = getDictionary(locale);
 
-  /* ponytail: بلا metadataBase تبقى هذه المسارات نسبية. النطاق الإنتاجي غير
-     معرّف في المشروع، وتخمينه يضع canonical خاطئاً في كل صفحة — فيُترك
-     لصاحب المشروع. بمجرّد ضبط metadataBase تصير كلّها مطلقة تلقائياً. */
+  /* ponytail: metadataBase يجعل كلّ المسارات النسبية أدناه مطلقة عند التصيير.
+     hreflang خاصّة لا تعمل إلّا مطلقة، فبدونه كانت تُتجاهل بصمت. */
   return {
+    metadataBase: new URL(SITE_URL),
     title: meta.title,
     description: meta.description,
     alternates: {
@@ -71,7 +71,7 @@ export default async function LocaleLayout({
 
   /**
    * بيانات منظّمة للشركة — الحقول المعروفة فعلاً من المشروع وحدها.
-   * ponytail: بلا url أو logo لأنّهما يحتاجان النطاق الإنتاجي، وبلا address
+   * ponytail: url وlogo مطلقان الآن بعد تأكيد النطاق. ويبقى بلا address
    * أو sameAs أو founder لأنّ المشروع لا يحوي أياً منها. البريد والهاتف
    * مأخوذان من app/site.ts، وهما بيانات الشركة الحقيقية.
    */
@@ -81,6 +81,8 @@ export default async function LocaleLayout({
     name: "Rawasi AI",
     alternateName: "رواسي",
     description: meta.description,
+    url: SITE_URL,
+    logo: `${SITE_URL}/brand/rawasi-mark-black.svg`,
     email: EMAIL,
     telephone: PHONE_DISPLAY,
   };
