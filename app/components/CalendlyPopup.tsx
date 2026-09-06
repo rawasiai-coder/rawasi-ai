@@ -3,8 +3,19 @@
 import { useEffect } from "react";
 
 const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "";
-const THEME =
-  "hide_gdpr_banner=1&background_color=FFFFFF&text_color=14161A&primary_color=00A3E0";
+/**
+ * ألوان رواسي على أداة Calendly.
+ * ponytail: هذه كل ما تتيحه الخطة المجانية — الشعار والخطوط وشارة
+ * "Powered by Calendly" ثابتة ولا تُزال إلا بترقية الحساب.
+ */
+const THEME = [
+  "hide_gdpr_banner=1",
+  "hide_landing_page_details=1", // يتخطّى صفحة الترحيب إلى التقويم مباشرة
+  "hide_event_type_details=1",   // العمود الأيسر مكرّر — الصفحة تشرح الاجتماع
+  "background_color=ffffff",
+  "text_color=14161a",
+  "primary_color=00a3e0",
+].join("&");
 
 declare global {
   interface Window {
