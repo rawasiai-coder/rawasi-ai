@@ -199,6 +199,7 @@ const en: Dict = {
     eyebrow: "Book a slot",
     title: "Ready to start?",
     lede: "One hour. You leave with a clear plan — whether or not we work together.",
+    cta: "Book a call",
     placeholderLabel: "Calendly calendar goes here",
     placeholderBefore: "The calendar appears here once ",
     placeholderAfter: " is set.",

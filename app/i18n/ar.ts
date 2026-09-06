@@ -183,6 +183,7 @@ const ar: Dict = {
     eyebrow: "احجز موعدك",
     title: "جاهزون نبدأ؟",
     lede: "جلسة ساعة. نخرج منها بخطة واضحة — سواء عملنا معاً أو لا.",
+    cta: "احجز اجتماعاً",
     placeholderLabel: "مكان تقويم Calendly",
     placeholderBefore: "يظهر التقويم هنا بمجرد ضبط ",
     placeholderAfter: ".",

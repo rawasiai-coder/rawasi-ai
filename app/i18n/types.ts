@@ -87,6 +87,7 @@ export interface Dict {
     eyebrow: string;
     title: string;
     lede: string;
+    cta: string;
     placeholderLabel: string;
     placeholderBefore: string;
     placeholderAfter: string;

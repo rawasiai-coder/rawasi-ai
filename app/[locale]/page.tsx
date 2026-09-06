@@ -6,6 +6,7 @@ import Testimonials from "../components/Testimonials";
 import Faq from "../components/Faq";
 import Booking from "../components/Booking";
 import Reveal from "../components/Reveal";
+import CalendlyPopup from "../components/CalendlyPopup";
 import { Problem, Services, How, Footer } from "../components/Sections";
 import { isLocale } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
@@ -33,6 +34,7 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       </main>
       <Footer d={d} locale={locale} />
       <Reveal />
+      <CalendlyPopup />
     </>
   );
 }
