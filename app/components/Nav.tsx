@@ -131,7 +131,11 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
         {/* ponytail: ثلاثة أعمدة — طرفان بـ flex-1 متساويين ووسط ثابت، فتقع
             الروابط في منتصف البطاقة تماماً مهما اختلف وزن الطرفين. مع
             justify-between وحده كانت تنزاح بنصف فرق العرض بينهما. */}
+        {/* ponytail: dir="ltr" على البطاقة وحدها — قرار علامة تجارية: الشعار
+            يمين الشاشة يساراً في اللغتين. النصّ العربي داخل الروابط يبقى
+            صحيحاً لأن كل رابط سطر مستقلّ، والاتجاه لا يقلب حروفه. */}
         <div
+          dir="ltr"
           className={`flex h-[58px] items-center gap-4 rounded-[18px] border px-6 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-[400ms] ${EASE} ${
             opaque
               ? "nav-card border-[rgba(20,22,26,.07)] bg-[rgba(255,255,255,.8)] backdrop-blur-[20px] backdrop-saturate-[1.6]"
