@@ -41,6 +41,8 @@ export interface Dict {
     lede: string;
     primary: string;
     secondary: string;
+    /** نصّ بديل للوحة الهيرو المصوّرة — تصف ما تعرضه الصورة لا اسم الملف */
+    artAlt: string;
   };
 
   demo: {

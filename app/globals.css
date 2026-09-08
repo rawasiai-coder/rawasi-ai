@@ -258,6 +258,53 @@ body{
 .hero-in > *:nth-child(4){ animation-delay:240ms; }
 .hero-in > *:nth-child(5){ animation-delay:300ms; }
 
+/* ===== لوحة الهيرو المصوّرة =====
+   ponytail: الطبقات مفصولة عمداً — الدخول والطفو كلاهما يكتب transform،
+   ووضعهما على عنصر واحد يجعل اللاحق يمسح السابق فتختفي إحدى الحركتين. */
+
+/* الدخول: مرّة واحدة، ثم forwards تثبّت النهاية فلا يعود العنصر شفافاً */
+/* ponytail: العرض الحيّ خرج من .hero-in ليصحّ ترتيبه على الجوال، فسقط عنه
+   التدرّج. هذا يعيده بتأخير الابن الرابع نفسه — يدخل بعد الأزرار كما كان. */
+.hero-demo{ opacity:0; animation:riseIn 560ms var(--ease-out) 240ms forwards; }
+
+.hero-art{ opacity:0; animation:artIn 820ms var(--ease-out) 160ms forwards; }
+@keyframes artIn{
+  from{ opacity:0; transform:translateY(20px) scale(.96); }
+  to  { opacity:1; transform:translateY(0) scale(1); }
+}
+
+/* الطفو: رأسي ٠–١٠px مع انزياح أفقي ٤px، دورة ٦٫٥ث */
+.hero-art-float{ animation:artFloat 6.5s ease-in-out infinite; will-change:transform; }
+@keyframes artFloat{
+  0%,100%{ transform:translate3d(0,0,0); }
+  25%    { transform:translate3d(4px,-6px,0); }
+  50%    { transform:translate3d(0,-10px,0); }
+  75%    { transform:translate3d(-4px,-5px,0); }
+}
+
+/* التوهّج: أزرق ثم ذهبي من لوحة الموقع نفسها، ينبض بالشفافية لا بالحجم وحده */
+.hero-art-glow{
+  position:absolute;
+  inset:8% 6%;
+  border-radius:50%;
+  background:
+    radial-gradient(46% 54% at 32% 44%, rgba(18,165,238,.32) 0%, transparent 70%),
+    radial-gradient(44% 50% at 70% 62%, rgba(255,196,0,.28) 0%, transparent 70%);
+  filter:blur(48px);
+  animation:artGlow 7s ease-in-out infinite;
+  will-change:opacity, transform;
+}
+@keyframes artGlow{
+  0%,100%{ opacity:.5;  transform:scale(.97); }
+  50%    { opacity:.85; transform:scale(1.03); }
+}
+
+/* ponytail: الطفو يتوقّف على الجوال — الحركة المستمرّة على أجهزة ضعيفة
+   تكلف بطارية بلا مقابل، والتوهّج وحده (شفافية) يكاد لا يكلّف شيئاً. */
+@media (max-width: 767px){
+  .hero-art-float{ animation:none; }
+}
+
 /* نبض خفيف على الزر الأساسي — يلفت دون إزعاج */
 @keyframes softPulse{
   0%,100%{ box-shadow:0 0 0 0 rgba(20,22,26,.22); }
@@ -274,6 +321,10 @@ body{
 
 @media (prefers-reduced-motion: reduce){
   .hero-in > *{ animation:none !important; opacity:1 !important; transform:none !important; }
+  /* ponytail: اللوحة تظهر في موضعها الطبيعي بلا دخول ولا طفو، ويبقى
+     التوهّج ثابتاً لا نابضاً — فهو جزء من الشكل لا حركة. */
+  .hero-demo, .hero-art, .hero-art-float{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .hero-art-glow{ animation:none !important; opacity:.6 !important; transform:none !important; }
   .btn-primary{ animation:none !important; }
   .msg-in{ animation:none !important; }
   .dot{ animation:none !important; opacity:.5; }

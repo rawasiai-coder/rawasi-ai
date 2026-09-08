@@ -32,7 +32,9 @@ export default function Demo({ d }: { d: Dict["demo"] }) {
   }, [chatLen, flowLen]);
 
   return (
-    <div className="mx-auto mt-12 w-full max-w-[560px]">
+    // ponytail: بلا قياس أو هامش هنا — الهيرو صار يملك تخطيطه، فالمكوّن
+    // يملأ ما يُعطى له ويصلح لعمود جانبي كما لعمود واحد.
+    <div className="w-full">
       {/* شريط التبويب */}
       <div className="mb-3 flex justify-center gap-2">
         {d.tabs.map((label, i) => (
@@ -49,10 +51,15 @@ export default function Demo({ d }: { d: Dict["demo"] }) {
         ))}
       </div>
 
-      <div className="relative min-h-[200px] overflow-hidden rounded-2xl border border-[var(--line)] bg-white/85 p-5 shadow-[0_8px_32px_rgba(20,22,26,.10)] backdrop-blur-md">
+      {/* ponytail: ارتفاع أدنى ثابت — اللوحة المصوّرة هي البطل الآن، وهذا
+          العرض الحيّ صار سنداً لها فلا يجوز أن ينافسها حجماً. */}
+      <div className="relative flex min-h-[200px] flex-col overflow-hidden rounded-2xl border border-[var(--line)] bg-white/85 p-5 shadow-[0_8px_32px_rgba(20,22,26,.10)] backdrop-blur-md">
         {/* المشهد أ — محادثة */}
         {scene === 0 && (
-          <div className="flex flex-col gap-2.5">
+          // ponytail: الرسائل تتراكم من الأسفل كما في محادثة حقيقية. مع
+          // البطاقة الأطول صارت تبدأ من الأعلى فيبقى نصفها فارغاً في أول
+          // الدورة — justify-end يبقيها ممتلئة في كل خطوة.
+          <div className="flex flex-1 flex-col justify-end gap-2.5">
             {d.chat.slice(0, step).map((m, i) => (
               <div
                 key={i}
@@ -83,7 +90,9 @@ export default function Demo({ d }: { d: Dict["demo"] }) {
 
         {/* المشهد ب — سير عمل */}
         {scene === 1 && (
-          <div className="flex h-full flex-col justify-center gap-3 py-2">
+          // ponytail: flex-1 لا h-full — الأب صار عمود flex بارتفاع أدنى،
+          // وh-full لا يُحلّ على min-height فكان المشهد ينهار إلى ارتفاعه.
+          <div className="flex flex-1 flex-col justify-center gap-3 py-2">
             {d.flow.map((n, i) => {
               const done = i < step;
               const active = i === step - 1;

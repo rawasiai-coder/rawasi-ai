@@ -37,6 +37,8 @@ const en: Dict = {
     lede: "We build the thing that takes over repetitive work across support, sales and operations — not slide decks.",
     primary: "Book a call",
     secondary: "What we do",
+    artAlt:
+      "An AI agent panel working an order step by step: order received, inventory checked, invoice generated, customer notified, and CRM updated.",
   },
 
   demo: {
