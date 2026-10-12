@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Demo from "./Demo";
 import { eyebrow, h2, lede } from "./styles";
 import type { Locale } from "../i18n/config";
 import type { Dict, ServiceKey } from "../i18n/types";
@@ -23,7 +24,13 @@ const STEP_IMAGES = [
   "/steps/04.webp",
 ];
 
-export function Problem({ d }: { d: Dict["problem"] }) {
+export function Problem({
+  d,
+  demo,
+}: {
+  d: Dict["problem"];
+  demo: Dict["demo"];
+}) {
   return (
     <section className="rv mx-auto max-w-[1120px] px-6 py-24">
       <div className={eyebrow}>{d.eyebrow}</div>
@@ -32,6 +39,14 @@ export function Problem({ d }: { d: Dict["problem"] }) {
         <br />
         {d.lineB}
       </h2>
+
+      {/* العرض الحيّ — موضعه هنا لا في الهيرو: القسم يصف العمل المتكرّر،
+          واللوحة تعرضه يُنفَّذ وحده مباشرة تحت الجملة التي تصفه.
+          ponytail: في الهيرو كان ينافس اللوحة المصوّرة ويكرّر خطواتها
+          الخمس نفسها — هنا يسند النصّ بدل أن يزاحم صورة. */}
+      <div className="mx-auto mt-12 w-full max-w-[560px]">
+        <Demo d={demo} />
+      </div>
     </section>
   );
 }
@@ -182,15 +197,18 @@ export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
               // ponytail: الاسم المعروض ناتج text-transform لا نصّ — بلا هذا
               // يقرأ القارئ الصوتي «rawasiai» ملتصقاً.
               aria-label="Rawasi AI"
-              className="inline-flex items-center gap-2.5"
+              className="inline-flex items-center"
             >
+              {/* ponytail: القفل الكامل هنا وحده — التذييل يحتمل علامة أكبر،
+                  وعندها يصير سطر «AI AGENCY» مقروءاً. دونه يظهر المختصر. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[22px]" />
-              {/* المعالجة نفسها التي في الشريط، بمقاس يناسب علامة ٢٢px */}
-              <span className="en wordmark text-[14px]">
-                rawasi
-                <span className="wordmark-ai text-[var(--color-blue)]">ai</span>
-              </span>
+              <img
+                src="/brand/rawasi-logo.svg"
+                alt=""
+                width={898}
+                height={188}
+                className="h-[54px] w-auto sm:h-[64px]"
+              />
             </a>
 
             <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--dim)]">

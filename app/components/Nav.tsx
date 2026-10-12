@@ -150,14 +150,20 @@ export default function Nav({ d, locale }: { d: Dict["nav"]; locale: Locale }) {
               // ponytail: بلا هذا يقرأ القارئ الصوتي نصّ العنصر «rawasiai»
               // ملتصقاً وبحروف صغيرة — الاسم المعروض ناتج text-transform لا نصّ.
               aria-label="Rawasi AI"
-              className="flex shrink-0 items-center gap-3 rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
+              className="flex shrink-0 items-center rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-blue)]"
             >
+              {/* ponytail: النسخة المختصرة بلا سطر «AI AGENCY» — ارتفاع الشريط
+                  ٥٨px، وعلامة بهذا الحجم تجعل السطر الصغير ٣px فيصير لطخة.
+                  القفل الكامل يظهر في التذييل حيث يتّسع له المكان.
+                  alt فارغ لأن الرابط نفسه موسوم بـaria-label، فلا يُقرأ مرّتين. */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/rawasi-mark-black.svg" alt="" className="h-[26px]" />
-              <span className="en wordmark text-[16px]">
-                rawasi
-                <span className="wordmark-ai text-[var(--color-blue)]">ai</span>
-              </span>
+              <img
+                src="/brand/rawasi-logo-compact.svg"
+                alt=""
+                width={898}
+                height={188}
+                className="h-[26px] w-auto sm:h-[30px]"
+              />
             </a>
           </div>
 

@@ -33,24 +33,8 @@ body{
 }
 .en{ direction:ltr; unicode-bidi:isolate; }
 
-/* ---------- علامة الاسم ----------
-   مبدأ مأخوذ من مراجع Mobbin (Hex وCoda وWindsurf): حين تجاور العلامةَ
-   كلمةُ الاسم، تحمل العلامة الثقل وتحمل الكلمة الدقّة — فالوزن الثقيل مع
-   تتبّع سالب وحروف صغيرة هو ما يجعلها تبدو قالباً جاهزاً لا هويّة مقصودة.
-   حروف كبيرة + تتبّع موجب + وزن متوسط: مقصود ومضبوط.
-
-   ponytail: التتبّع يضيف فراغاً بعد الحرف الأخير فينزاح البصر يميناً —
-   الهامش السالب المكافئ يعيد الكلمة إلى مكانها بدقّة. */
-/* ponytail: بلا مقاس هنا — المقاس يتبع حجم العلامة في كل موضع (١٦ في الشريط،
-   ١٤ في التذييل)، أمّا المعالجة الطباعية فواحدة لا تتكرّر. */
-.wordmark{
-  font-weight:500;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin-inline-end:-.14em;
-}
-/* فجوة كلمة خفيفة قبل AI — الاسم «رواسي AI» لا كلمة واحدة ملتصقة */
-.wordmark .wordmark-ai{ margin-inline-start:.14em; }
+/* ponytail: صنفا .wordmark و.wordmark-ai حُذفا مع اعتماد القفل المرسوم —
+   اسم العلامة صار داخل ملف SVG، فلم تعد هناك كلمة نصّية تُعالَج طباعياً. */
 
 /* ==========================================================================
    الاتجاه — RTL كمتطلّب أساسي لا كسمة على <html>
@@ -263,10 +247,6 @@ body{
    ووضعهما على عنصر واحد يجعل اللاحق يمسح السابق فتختفي إحدى الحركتين. */
 
 /* الدخول: مرّة واحدة، ثم forwards تثبّت النهاية فلا يعود العنصر شفافاً */
-/* ponytail: العرض الحيّ خرج من .hero-in ليصحّ ترتيبه على الجوال، فسقط عنه
-   التدرّج. هذا يعيده بتأخير الابن الرابع نفسه — يدخل بعد الأزرار كما كان. */
-.hero-demo{ opacity:0; animation:riseIn 560ms var(--ease-out) 240ms forwards; }
-
 .hero-art{ opacity:0; animation:artIn 820ms var(--ease-out) 160ms forwards; }
 @keyframes artIn{
   from{ opacity:0; transform:translateY(20px) scale(.96); }
@@ -323,7 +303,7 @@ body{
   .hero-in > *{ animation:none !important; opacity:1 !important; transform:none !important; }
   /* ponytail: اللوحة تظهر في موضعها الطبيعي بلا دخول ولا طفو، ويبقى
      التوهّج ثابتاً لا نابضاً — فهو جزء من الشكل لا حركة. */
-  .hero-demo, .hero-art, .hero-art-float{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .hero-art, .hero-art-float{ animation:none !important; opacity:1 !important; transform:none !important; }
   .hero-art-glow{ animation:none !important; opacity:.6 !important; transform:none !important; }
   .btn-primary{ animation:none !important; }
   .msg-in{ animation:none !important; }

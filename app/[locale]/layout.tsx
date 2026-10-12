@@ -82,7 +82,7 @@ export default async function LocaleLayout({
     alternateName: "رواسي",
     description: meta.description,
     url: SITE_URL,
-    logo: `${SITE_URL}/brand/rawasi-mark-black.svg`,
+    logo: `${SITE_URL}/brand/rawasi-mark.svg`,
     email: EMAIL,
     telephone: PHONE_DISPLAY,
   };

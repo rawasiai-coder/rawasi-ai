@@ -23,8 +23,8 @@ export default async function Home({ params }: PageProps<"/[locale]">) {
       {/* ponytail: <main> معلَم دلالي فقط — عنصر كتليّ بلا أنماط، فالتخطيط
           كما هو. التنقّل والتذييل خارجه عمداً؛ محتوى الصفحة وحده بداخله. */}
       <main>
-        <Hero d={d.hero} demo={d.demo} />
-        <Problem d={d.problem} />
+        <Hero d={d.hero} />
+        <Problem d={d.problem} demo={d.demo} />
         <Services d={d.services} />
         <How d={d.how} />
         <Work d={d.work} />
