@@ -29,6 +29,20 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const { meta } = getDictionary(locale);
 
+  /* صورة المعاينة عند مشاركة الرابط — تعريف واحد يستعمله OG وتويتر معاً.
+     ponytail: المسار نسبي عمداً؛ metadataBase يحوّله إلى مطلق عند التصيير،
+     فلا يُكتب النطاق مرّتين ولا ينحرف أحدهما عن الآخر. والشبكات الاجتماعية
+     لا تقبل إلّا المطلق، فالاعتماد على التحويل مقصود لا سهو.
+     الاسم يحمل v1: هذه الشبكات تخزّن الصورة بعنوانها، فأي تحديث لاحق
+     يحتاج اسماً جديداً وإلّا بقيت المعاينة القديمة شهوراً. */
+  const preview = {
+    url: "/og/rawasi-og-v1.jpg",
+    width: 1200,
+    height: 630,
+    alt: "Rawasi AI",
+    type: "image/jpeg",
+  };
+
   /* ponytail: metadataBase يجعل كلّ المسارات النسبية أدناه مطلقة عند التصيير.
      hreflang خاصّة لا تعمل إلّا مطلقة، فبدونه كانت تُتجاهل بصمت. */
   return {
@@ -51,11 +65,15 @@ export async function generateMetadata({
       url: `/${locale}`,
       locale: OG_LOCALE[locale],
       alternateLocale: OG_LOCALE[OTHER[locale]],
+      images: [preview],
     },
     twitter: {
+      // ponytail: summary_large_image كانت معلنة بلا صورة، فتسقط البطاقة إلى
+      // الشكل النصّي الصغير. الصورة هي ما يجعل هذا النوع يعمل أصلاً.
       card: "summary_large_image",
       title: meta.title,
       description: meta.description,
+      images: [preview],
     },
   };
 }
