@@ -10,7 +10,7 @@ import {
   isLocale,
 } from "../i18n/config";
 import { getDictionary } from "../i18n/dictionaries";
-import { EMAIL, PHONE_DISPLAY, SITE_URL } from "../site";
+import { EMAIL, PHONE_DISPLAY, SITE_URL, SOCIAL } from "../site";
 
 /**
  * التخطيط الجذر داخل مقطع اللغة — Next يسمح بذلك حين لا يوجد app/layout.tsx.
@@ -89,9 +89,9 @@ export default async function LocaleLayout({
 
   /**
    * بيانات منظّمة للشركة — الحقول المعروفة فعلاً من المشروع وحدها.
-   * ponytail: url وlogo مطلقان الآن بعد تأكيد النطاق. ويبقى بلا address
-   * أو sameAs أو founder لأنّ المشروع لا يحوي أياً منها. البريد والهاتف
-   * مأخوذان من app/site.ts، وهما بيانات الشركة الحقيقية.
+   * ponytail: url وlogo مطلقان بعد تأكيد النطاق، وsameAs أُضيف حين صارت
+   * الحسابات الرسمية معروفة — وهو ما تربط به محرّكات البحث المنظّمة
+   * بحساباتها. ويبقى بلا address أو founder لأنّهما غير معروفين بعد.
    */
   const organizationLd = {
     "@context": "https://schema.org",
@@ -103,6 +103,7 @@ export default async function LocaleLayout({
     logo: `${SITE_URL}/brand/rawasi-mark.svg`,
     email: EMAIL,
     telephone: PHONE_DISPLAY,
+    sameAs: SOCIAL.map((s) => s.url),
   };
 
   return (

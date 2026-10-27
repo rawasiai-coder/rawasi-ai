@@ -20,3 +20,30 @@ export const EMAIL_URL = `mailto:${EMAIL}`;
  * بلا شرطة مائلة في النهاية — فURL يضيفها عند التركيب.
  */
 export const SITE_URL = "https://rawasi.ai";
+
+/**
+ * حسابات التواصل الاجتماعي الرسمية.
+ *
+ * ponytail: مصفوفة واحدة مرتّبة — يستعملها التذييل للعرض ويستعملها
+ * sameAs في JSON-LD للتحقّق من الهويّة. فصلهما يعني حساباً يُضاف في
+ * مكان ويُنسى في الآخر.
+ *
+ * `as const` يثبّت المفاتيح، فمفتاح أيقونة غير موجود يسقط عند التحقّق
+ * من الأنواع لا في المتصفّح.
+ */
+export const SOCIAL = [
+  {
+    key: "facebook",
+    label: "Facebook",
+    url: "https://www.facebook.com/profile.php?id=61594118886695",
+  },
+  {
+    key: "instagram",
+    label: "Instagram",
+    url: "https://www.instagram.com/rawasiai_/",
+  },
+  { key: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@rawasiai_" },
+  { key: "x", label: "X", url: "https://x.com/RawasiAi_" },
+] as const;
+
+export type SocialKey = (typeof SOCIAL)[number]["key"];

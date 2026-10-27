@@ -214,6 +214,7 @@ const en: Dict = {
       "A Saudi AI agency. We build agents and automation that run inside your operations — not slide decks.",
     navTitle: "Quick links",
     servicesTitle: "Services",
+    socialTitle: "Follow us",
     rights: "All rights reserved.",
   },
 };

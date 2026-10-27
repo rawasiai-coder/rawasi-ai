@@ -106,6 +106,8 @@ export interface Dict {
     tagline: string;
     navTitle: string;
     servicesTitle: string;
+    /** تسمية مجموعة روابط التواصل — لقارئ الشاشة، بلا عنوان مرئي */
+    socialTitle: string;
     rights: string;
   };
 }

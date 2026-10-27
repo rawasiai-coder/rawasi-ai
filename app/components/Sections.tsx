@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Demo from "./Demo";
+import SocialLinks from "./SocialLinks";
 import { eyebrow, h2, lede } from "./styles";
 import type { Locale } from "../i18n/config";
 import type { Dict, ServiceKey } from "../i18n/types";
@@ -245,6 +246,12 @@ export function Footer({ d, locale }: { d: Dict; locale: Locale }) {
         <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-[var(--line)] pt-6 text-[13px] text-[var(--dim)]">
           <div>
             <span className="en">© 2026</span> {f.brand}. {f.rights}
+          </div>
+          {/* ponytail: ms-auto لا mr-auto — يدفع المجموعة إلى نهاية السطر
+              منطقياً، فتقع يميناً في الإنجليزية ويساراً في العربية وحدها.
+              وعند الالتفاف على الشاشات الضيّقة يسقط الدفع ويصطفّان رأسياً. */}
+          <div className="ms-auto">
+            <SocialLinks label={f.socialTitle} />
           </div>
         </div>
       </div>
